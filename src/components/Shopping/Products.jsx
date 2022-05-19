@@ -3,7 +3,11 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct, increaseQuantity } from "../../redux/cartSlice";
+import {
+  addProduct,
+  removeProduct,
+  increaseQuantity,
+} from "../../redux/cartSlice";
 
 import { productsList } from "./ProductsList";
 
@@ -114,9 +118,10 @@ function Products() {
   });
 
   const handleAddToCart = (product) => {
-    if (userCart.includes(product)) {
+    const productsIds = userCart.map(({ id }) => id);
+
+    if (productsIds.includes(product.id)) {
       dispatch(increaseQuantity(product));
-      return;
     }
 
     dispatch(addProduct(product));

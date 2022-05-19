@@ -11,7 +11,7 @@ export const slice = createSlice({
       return {
         ...state,
         userCart: [...state.userCart].filter((product) => {
-          if (product.id === payload) {
+          if (product.id === payload.id) {
             return;
           }
           return product;
@@ -19,9 +19,14 @@ export const slice = createSlice({
       };
     },
     increaseQuantity: (state, { payload }) => {
-      console.log(payload);
+      const newPayload = [...state.userCart].map((product) => {
+        if (product.id === payload.id) {
+          return { ...product, quantity: product.quantity + 1 };
+        }
+        return product;
+      });
 
-      return { ...state, userCart: [...state.userCart] };
+      return { ...state, userCart: newPayload };
     },
   },
 });

@@ -252,14 +252,31 @@ function Cart() {
     });
   }, [userCart]);
 
-  const handleRemoveProduct = (id) => {
-    dispatch(removeProduct(id));
+  const filteredUserCart = () => {
+    const productsQuantities = userCart.map(({ quantity }) => quantity);
+
+    const maxValue = Math.max.apply(Math, productsQuantities);
+
+    const filteredUserCart = userCart.filter((product) => {
+      console.log("productquantity: ", product.quantity);
+      console.log("maxValue: ", maxValue);
+      if (product.quantity >= maxValue) {
+        return product;
+      }
+      return;
+    });
+
+    return filteredUserCart;
+  };
+
+  const handleRemoveProduct = (product) => {
+    dispatch(removeProduct(product));
   };
 
   return (
     <CartContainer theme={currentTheme} data-aos="fade-in">
       <div id="cart-left">
-        {userCart.map((product, index) => (
+        {filteredUserCart().map((product, index) => (
           <div className="product-card" key={index}>
             <div className="product-card-left">
               <img
@@ -273,14 +290,14 @@ function Cart() {
 
             <div className="product-card-right">
               <div className="product-quantity">
-                Quantity: {product.quantity ? product.quantity : 1}
+                Quantity: {product.quantity}
               </div>
               <div className="product-price">{`${product.price.toFixed(
                 2
               )} $`}</div>
               <button
                 className="remove-product"
-                onClick={() => handleRemoveProduct(product.id)}
+                onClick={() => handleRemoveProduct(product)}
               >
                 <img src={trashIcon} alt="Remove Product" width={15} />
               </button>
