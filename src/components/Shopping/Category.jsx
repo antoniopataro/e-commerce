@@ -4,11 +4,12 @@ import styled from "styled-components";
 
 import { motion } from "framer-motion";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import filterIcon from "../../assets/category-picker-icons/filterIcon.svg";
+import { changeCategory } from "../../redux/categorySlice";
 
-const CategoryPickerContainer = styled.div`
+const CategoryContainer = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -62,6 +63,8 @@ const CategoryPickerContainer = styled.div`
       height: 100px;
 
       background-color: ${(props) => props.theme.primary};
+
+      box-shadow: 0px 4px 4px ${(props) => props.theme.shadow};
     }
 
     #category-option-filter {
@@ -85,21 +88,26 @@ const CategoryPickerContainer = styled.div`
   }
 `;
 
-function CategoryPicker() {
+function Category() {
+  const dispatch = useDispatch();
   const currentTheme = useSelector((state) => state.theme.currentTheme);
 
   const [indicatorX, setIndicatorX] = useState(0);
   const [indicatorWidth, setIndicatorWidth] = useState(0);
 
   const handleCategory = (e) => {
-    const start = document.getElementById("first-category");
+    updateIndicator(e);
+    dispatch(changeCategory(e.target.textContent));
+  };
 
+  const updateIndicator = (e) => {
+    const start = document.getElementById("first-category");
     setIndicatorWidth(e.target.offsetWidth);
     setIndicatorX(e.target.offsetLeft - start.offsetLeft);
   };
 
   return (
-    <CategoryPickerContainer theme={currentTheme}>
+    <CategoryContainer theme={currentTheme}>
       <h2 id="category-picker-title">Category</h2>
       <div id="category-selector">
         <div
@@ -139,8 +147,8 @@ function CategoryPicker() {
           transition={{ ease: "easeOut" }}
         ></motion.div>
       </div>
-    </CategoryPickerContainer>
+    </CategoryContainer>
   );
 }
 
-export default CategoryPicker;
+export default Category;

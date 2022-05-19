@@ -6,6 +6,8 @@ import searchIcon from "../../assets/header-icons/searchIcon.svg";
 import heartIcon from "../../assets/header-icons/heartIcon.svg";
 import cartIcon from "../../assets/header-icons/cartIcon.svg";
 
+import { Link } from "react-router-dom";
+
 const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -26,6 +28,8 @@ const HeaderContainer = styled.div`
     align-items: center;
     justify-content: center;
 
+    cursor: pointer;
+
     background-color: ${(props) => props.theme.primary};
   }
 
@@ -37,6 +41,11 @@ const HeaderContainer = styled.div`
     justify-content: center;
 
     gap: 20px;
+
+    a {
+      text-decoration: none;
+      color: ${(props) => props.theme.text};
+    }
   }
 
   #header-right {
@@ -48,14 +57,24 @@ const HeaderContainer = styled.div`
 
     gap: 20px;
 
-    .nav-bar-icon {
+    .nav-bar-icon,
+    #cart-link {
+      display: flex;
+
       width: 40px;
       height: 40px;
+
+      align-items: center;
+      justify-content: center;
 
       border-radius: 50px;
 
       :hover {
         background-color: ${(props) => props.theme.secondary};
+      }
+
+      #cart-link img {
+        pointer-events: none;
       }
     }
 
@@ -68,7 +87,7 @@ const HeaderContainer = styled.div`
       align-items: center;
       justify-content: center;
 
-      color: ${(props) => props.theme.text};
+      color: ${(props) => props.theme.invertedText};
       background-color: ${(props) => props.theme.primary};
     }
   }
@@ -96,7 +115,9 @@ function Header() {
         <menu id="menu">
           <img src={menuIcon} alt="collapsed-menu" width={30} />
         </menu>
-        <div id="e-commerce-name">E-Commerce</div>
+        <Link to="/">
+          <div id="e-commerce-name">E-Commerce</div>
+        </Link>
       </div>
 
       <div id="header-right">
@@ -107,7 +128,9 @@ function Header() {
           <img src={heartIcon} alt="Favorites" width={20} />
         </button>
         <button className="nav-bar-icon">
-          <img src={cartIcon} alt="Cart" width={20} />
+          <Link id="cart-link" to="/cart">
+            <img src={cartIcon} alt="Cart" width={20} />
+          </Link>
         </button>
         <button id="login-button">Login</button>
       </div>

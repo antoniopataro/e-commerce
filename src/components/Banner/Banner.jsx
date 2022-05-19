@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 import { useSelector } from "react-redux";
 
+import bannerImage from "../../assets/bannerImage.png";
+
 const BannerContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -27,6 +29,7 @@ const BannerContainer = styled.div`
     padding: 50px;
 
     #banner-title {
+      text-align: center;
       color: ${(props) => props.theme.primary};
     }
     #banner-subtitle {
@@ -54,15 +57,11 @@ function Banner() {
   return (
     <BannerContainer theme={currentTheme}>
       <div id="banner-left">
-        <h1 id="banner-title">Winter 21'</h1>
-        <h4 id="banner-subtitle">
-          Winter layer season is here. Check out our trendy new winter
-          collection to stay warm in style.
-        </h4>
+        <h1 id="banner-title">Vende-se</h1>
+        <h4 id="banner-subtitle">compra ai rapasiada ta baratim slc</h4>
       </div>
       <div id="banner-right">
-        Here goes a nice image.
-        {/* <img src="" alt="Banner Image" /> */}
+        <img src={bannerImage} alt="Banner Image" width={400} />
       </div>
     </BannerContainer>
   );

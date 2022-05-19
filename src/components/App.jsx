@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import "../styles/App.css";
 
 import { useSelector } from "react-redux";
 
 import Header from "./Header/Header";
-import Banner from "./Main/Banner";
-import CategoryPicker from "./Shopping/CategoryPicker";
-import ShoppingItems from "./Shopping/ShoppingItems";
-import Footer from "./Footer/Footer";
+import Main from "./Main";
+import Cart from "./Cart";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const AppContainer = styled.div`
   display: flex;
@@ -26,13 +26,15 @@ function App() {
   const currentTheme = useSelector((state) => state.theme.currentTheme);
 
   return (
-    <AppContainer theme={currentTheme}>
-      <Header />
-      <Banner />
-      <CategoryPicker />
-      <ShoppingItems />
-      <Footer />
-    </AppContainer>
+    <BrowserRouter>
+      <AppContainer theme={currentTheme}>
+        <Header />
+        <Routes>
+          <Route exact path="/" element={<Main />} />
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
+      </AppContainer>
+    </BrowserRouter>
   );
 }
 
