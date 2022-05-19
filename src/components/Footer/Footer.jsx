@@ -25,14 +25,8 @@ function Footer() {
 
   return (
     <FooterContainer theme={currentTheme}>
-      <a href="https://github.com/antoniopataro/" target="_blank">
+      <a href="https://github.com/antoniopataro/e-commerce-app" target="_blank">
         <img src={githubIcon} alt="Github" width={30} />
-      </a>
-      <a href="https://www.instagram.com/antoniopataro/" target="_blank">
-        <img src={instagramIcon} alt="Instagram" width={30} />
-      </a>
-      <a href="https://www.linkedin.com/in/antoniopataro/" target="_blank">
-        <img src={linkedinIcon} alt="LinkedIn" width={30} />
       </a>
     </FooterContainer>
   );

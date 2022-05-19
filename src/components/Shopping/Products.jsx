@@ -1,13 +1,18 @@
+import { useState, useEffect } from "react";
+
 import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct } from "../../redux/cartSlice";
+import { addProduct, increaseQuantity } from "../../redux/cartSlice";
 
 import { productsList } from "./ProductsList";
 
 import { motion } from "framer-motion";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
-import bannerImage from "../../assets/bannerImage.png";
+import heartIcon from "../../assets/header-icons/heartIcon.svg";
+import closeIcon from "../../assets/closeIcon.svg";
 
 const ProductsContainer = styled.div`
   display: grid;
@@ -29,52 +34,77 @@ const ProductsContainer = styled.div`
     width: 100%;
     aspect-ratio: 1;
 
+    align-items: center;
     justify-content: space-between;
 
     padding: 20px;
+    gap: 10px;
 
     background-color: ${(props) => props.theme.secondary};
 
-    h4 {
-      color: ${(props) => props.theme.tertiary};
+    .product-favorite-icon {
+      text-align: right;
+
+      width: 100%;
     }
 
-    .procuct-card-bottom {
-      display: flex;
-      flex-direction: row;
+    .product-image {
+      width: 100%;
+      height: 100%;
+    }
 
-      align-items: flex-end;
-      justify-content: space-between;
+    .product-name {
+      font-size: 16px;
+      text-align: center;
+      width: 100%;
+    }
 
-      .add-to-cart {
-        font-size: 12px;
+    .product-price {
+      font-size: 12px;
+      text-align: center;
+      width: 100%;
+    }
+  }
+  .add-to-cart {
+    font-size: 12px;
 
-        padding: 5px;
+    width: 100%;
+    height: 35px;
 
-        border: none;
-        outline: none;
+    padding: 5px;
 
-        border-radius: 0px;
+    border: none;
+    outline: none;
 
-        cursor: pointer;
+    border-radius: 0px;
 
-        color: ${(props) => props.theme.invertedText};
-        background-color: ${(props) => props.theme.primary};
+    cursor: pointer;
 
-        div {
-          pointer-events: none;
-        }
-      }
+    color: ${(props) => props.theme.invertedText};
+    background-color: ${(props) => props.theme.primary};
+
+    div {
+      pointer-events: none;
     }
   }
 `;
 
 function Products() {
+  useEffect(() => {
+    AOS.init({
+      duration: 250,
+    });
+  }, []);
+
   const dispatch = useDispatch();
+
+  const userCart = useSelector((state) => state.cart.userCart);
   const currentTheme = useSelector((state) => state.theme.currentTheme);
   const currentCategory = useSelector(
     (state) => state.category.currentCategory
   );
+
+  const [wasProductAdded, setWasProductAdded] = useState(false);
 
   const categoryFilter = productsList.filter((product) => {
     if (product.category === currentCategory) {
@@ -84,30 +114,46 @@ function Products() {
   });
 
   const handleAddToCart = (product) => {
+    if (userCart.includes(product)) {
+      dispatch(increaseQuantity(product));
+      return;
+    }
+
     dispatch(addProduct(product));
+    notifyAddition();
+  };
+
+  const notifyAddition = () => {
+    setTimeout(() => {
+      setWasProductAdded(false);
+    }, 2500);
+
+    setWasProductAdded(true);
   };
 
   return (
-    <ProductsContainer theme={currentTheme}>
-      {categoryFilter.map((product, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          whileHover={{ scale: 1.05 }}
-          className="product"
-        >
-          <div className="product-name">{product.name}</div>
-          <img
-            src={bannerImage /*product.image*/}
-            alt="Product Image"
-            className="product-img"
-            width={100}
-          />
-          <div className="procuct-card-bottom">
-            <div className="product-price">
-              <h4>Price:</h4>
-              {`${product.price.toFixed(2)} $`}
+    <>
+      <ProductsContainer theme={currentTheme} data-aos="fade-up">
+        {categoryFilter.map((product, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            whileHover={{ scale: 1.05 }}
+          >
+            <div className="product">
+              <div className="product-favorite-icon">
+                <img src={heartIcon} alt="Favorite Product" width={15} />
+              </div>
+              <img
+                src={product.image}
+                alt="Product Image"
+                className="product-image"
+              />
+              <div className="product-name">{product.name}</div>
+              <div className="product-price">
+                {`${product.price.toFixed(2)} $`}
+              </div>
             </div>
             <button
               className="add-to-cart"
@@ -115,10 +161,17 @@ function Products() {
             >
               <div>Add to Cart</div>
             </button>
-          </div>
-        </motion.div>
-      ))}
-    </ProductsContainer>
+          </motion.div>
+        ))}
+      </ProductsContainer>
+      <motion.div
+        animate={{ y: wasProductAdded ? -50 : 100 }}
+        id="notifier-modal"
+      >
+        <div>Product Added</div>
+        <img src={closeIcon} alt="Close Modal" width={20} />
+      </motion.div>
+    </>
   );
 }
 

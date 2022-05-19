@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 
 import styled from "styled-components";
 
-import { useSelector } from "react-redux";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+import { useDispatch, useSelector } from "react-redux";
+import { removeProduct } from "../redux/cartSlice";
 
 import trashIcon from "../assets/trashIcon.svg";
 import applepayIcon from "../assets/payment-options-icons/applepayIcon.svg";
@@ -19,6 +23,7 @@ const CartContainer = styled.div`
   height: calc(100vh - 100px);
 
   padding-bottom: 100px;
+  margin-top: 100px;
 
   #cart-left {
     display: flex;
@@ -31,15 +36,8 @@ const CartContainer = styled.div`
     overflow: scroll;
 
     ::-webkit-scrollbar {
-      width: 5px;
+      width: 0;
       height: 0;
-
-      background-color: ${(props) => props.theme.secondary};
-    }
-    ::-webkit-scrollbar-thumb {
-      border-radius: 1000px;
-
-      background-color: ${(props) => props.theme.tertiary};
     }
 
     .product-card {
@@ -128,7 +126,7 @@ const CartContainer = styled.div`
 
       align-items: center;
 
-      gap: 75px;
+      gap: 50px;
     }
 
     #cart-right-title {
@@ -225,29 +223,41 @@ const CartContainer = styled.div`
 
       font-size: 16px;
 
+      cursor: pointer;
+
       background-color: ${(props) => props.theme.secondary};
     }
   }
 `;
 
 function Cart() {
+  useEffect(() => {
+    AOS.init({
+      duration: 250,
+    });
+  }, []);
+
+  const dispatch = useDispatch();
+
   const userCart = useSelector((state) => state.cart.userCart);
   const currentTheme = useSelector((state) => state.theme.currentTheme);
 
   const [cartPrice, setCartPrice] = useState(0);
 
-  const getCartPrice = () => {};
-
-  useEffect(() => {
+  const getCartPrice = useEffect(() => {
     setCartPrice(0);
 
     userCart.map((product) => {
-      setCartPrice((price) => price + product.price);
+      setCartPrice((current) => current + product.price);
     });
   }, [userCart]);
 
+  const handleRemoveProduct = (id) => {
+    dispatch(removeProduct(id));
+  };
+
   return (
-    <CartContainer theme={currentTheme}>
+    <CartContainer theme={currentTheme} data-aos="fade-in">
       <div id="cart-left">
         {userCart.map((product, index) => (
           <div className="product-card" key={index}>
@@ -262,11 +272,16 @@ function Cart() {
             </div>
 
             <div className="product-card-right">
-              <div className="product-quantity">Quantity: 1</div>
+              <div className="product-quantity">
+                Quantity: {product.quantity ? product.quantity : 1}
+              </div>
               <div className="product-price">{`${product.price.toFixed(
                 2
               )} $`}</div>
-              <button className="remove-product">
+              <button
+                className="remove-product"
+                onClick={() => handleRemoveProduct(product.id)}
+              >
                 <img src={trashIcon} alt="Remove Product" width={15} />
               </button>
             </div>

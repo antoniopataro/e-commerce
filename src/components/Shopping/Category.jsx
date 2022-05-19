@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
 
@@ -63,8 +63,6 @@ const CategoryContainer = styled.div`
       height: 100px;
 
       background-color: ${(props) => props.theme.primary};
-
-      box-shadow: 0px 4px 4px ${(props) => props.theme.shadow};
     }
 
     #category-option-filter {
@@ -102,9 +100,17 @@ function Category() {
 
   const updateIndicator = (e) => {
     const start = document.getElementById("first-category");
-    setIndicatorWidth(e.target.offsetWidth);
-    setIndicatorX(e.target.offsetLeft - start.offsetLeft);
+    setIndicatorWidth(start.offsetWidth);
+    if (e) {
+      setIndicatorX(e.target.offsetLeft - start.offsetLeft);
+      return;
+    }
+    setIndicatorX(start.offsetLeft - start.offsetWidth);
   };
+
+  const updateIndicatorOnLoad = useEffect(() => {
+    updateIndicator();
+  }, []);
 
   return (
     <CategoryContainer theme={currentTheme}>

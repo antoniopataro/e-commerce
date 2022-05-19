@@ -27,8 +27,8 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Header />
       <AppContainer theme={currentTheme}>
-        <Header />
         <Routes>
           <Route exact path="/" element={<Main />} />
           <Route path="/cart" element={<Cart />} />
