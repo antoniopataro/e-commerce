@@ -128,6 +128,8 @@ function Products() {
   });
 
   const handleAddToCart = (product) => {
+    notifyAddition();
+
     const productsIds = userCart.map(({ id }) => id); // cant do it with raw product because its quantity is being changed
 
     if (productsIds.includes(product.id)) {
@@ -136,7 +138,6 @@ function Products() {
     }
 
     dispatch(addProduct(product));
-    notifyAddition();
   };
 
   const notifyAddition = () => {
@@ -148,6 +149,8 @@ function Products() {
   };
 
   const handleFavorite = (product) => {
+    notifyAddition();
+
     const favoritesIds = userFavorites.map(({ id }) => id);
 
     if (favoritesIds.includes(product.id)) {
@@ -199,7 +202,12 @@ function Products() {
         id="notifier-modal"
       >
         <div>Product Added</div>
-        <img src={closeIcon} alt="Close Modal" width={20} />
+        <img
+          src={closeIcon}
+          alt="Close Modal"
+          width={20}
+          onClick={() => setWasProductAdded(false)} // a little quick fix - not proud of the naming, but it closes the modal
+        />
       </motion.div>
     </>
   );

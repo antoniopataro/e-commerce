@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 
+import { useDispatch, useSelector } from "react-redux";
+import { removeProduct } from "../../redux/cartSlice";
+
+import { Link } from "react-router-dom";
+
 import styled from "styled-components";
+
+import { motion } from "framer-motion";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
-
-import { useDispatch, useSelector } from "react-redux";
-import { removeProduct } from "../../redux/cartSlice";
 
 import trashIcon from "../../assets/trashIcon.svg";
 import applepayIcon from "../../assets/payment-options-icons/applepayIcon.svg";
@@ -220,6 +224,7 @@ const CartContainer = styled.div`
       padding: 0 20px;
 
       border: none;
+      outline: none;
 
       font-size: 16px;
 
@@ -243,6 +248,8 @@ function Cart() {
   const currentTheme = useSelector((state) => state.theme.currentTheme);
 
   const [cartPrice, setCartPrice] = useState(0);
+  const [paymentOption, setPaymentOption] = useState("Credit Card");
+  const [shipTo, setShipTo] = useState();
 
   const getCartPrice = useEffect(() => {
     setCartPrice(0);
@@ -256,11 +263,20 @@ function Cart() {
     dispatch(removeProduct(product));
   };
 
+  const handleCartSubmit = () => {
+    console.log("submit cart");
+  };
+
   return (
     <CartContainer theme={currentTheme} data-aos="fade-in">
       <div id="cart-left">
         {userCart.map((product, index) => (
-          <div className="product-card" key={index}>
+          <motion.div
+            initial={{ opacity: 1, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="product-card"
+            key={index}
+          >
             <div className="product-card-left">
               <img
                 src={bannerImage}
@@ -285,40 +301,90 @@ function Cart() {
                 <img src={trashIcon} alt="Remove Product" width={15} />
               </button>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-
       <div id="cart-right">
         <div id="card-right-top">
           <h3 id="cart-right-title">Checkout</h3>
           <div id="ship-to">
             <h4 id="ship-to-title">Ship to:</h4>
-            <input type="number" name="ship-to-zipcode" id="ship-to-input" />
+            <input
+              type="number"
+              name="ship-to-zipcode"
+              id="ship-to-input"
+              placeholder="Input your ZIP Code."
+              onChange={(e) => setShipTo(e.target.value)}
+            />
           </div>
           <div id="payment-method">
             <div id="payment-method-title">Payment Method</div>
             <div id="payment-method-container">
-              <div className="payment-method-option">
+              <motion.div
+                style={{ backgroundColor: currentTheme.background }}
+                animate={{
+                  backgroundColor:
+                    paymentOption === "Credit Card"
+                      ? currentTheme.backgroundColor
+                      : currentTheme.primary,
+                }}
+                className="payment-method-option"
+                onClick={() => setPaymentOption("Credit Card")}
+              >
                 <img
                   src={creditcardIcon}
                   alt="Pay with Credit Card"
                   width={30}
                 />
-              </div>
-              <div className="payment-method-option">
+              </motion.div>
+              <motion.div
+                style={{ backgroundColor: currentTheme.background }}
+                animate={{
+                  backgroundColor:
+                    paymentOption === "Paypal"
+                      ? currentTheme.background
+                      : currentTheme.primary,
+                }}
+                className="payment-method-option"
+                onClick={() => setPaymentOption("Paypal")}
+              >
                 <img src={paypalIcon} alt="Pay with Paypal" width={50} />
-              </div>
-              <div className="payment-method-option">
+              </motion.div>
+              <motion.div
+                style={{ backgroundColor: currentTheme.background }}
+                animate={{
+                  backgroundColor:
+                    paymentOption === "Apple Pay"
+                      ? currentTheme.background
+                      : currentTheme.primary,
+                }}
+                className="payment-method-option"
+                onClick={() => setPaymentOption("Apple Pay")}
+              >
                 <img src={applepayIcon} alt="Pay with Apple Pay" width={40} />
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
-        <button id="checkout">
-          <div id="total-price">{`${cartPrice.toFixed(2)} $`}</div>
-          <div>Pay &gt;</div>
-        </button>
+        <Link
+          style={{ textDecoration: "none", width: "100%" }}
+          to={!shipTo || cartPrice === 0 ? "" : "/checkout"}
+        >
+          <motion.button
+            animate={{
+              backgroundColor: shipTo
+                ? currentTheme.secondary
+                : currentTheme.tertiary,
+            }}
+            disabled={!shipTo || cartPrice === 0}
+            type="submit"
+            onClick={() => handleCartSubmit()}
+            id="checkout"
+          >
+            <div id="total-price">{`${cartPrice.toFixed(2)} $`}</div>
+            <div>Pay &gt;</div>
+          </motion.button>
+        </Link>
       </div>
     </CartContainer>
   );

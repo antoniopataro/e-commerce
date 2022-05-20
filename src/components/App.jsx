@@ -9,9 +9,9 @@ import Main from "./Main/Main";
 import Favorites from "./Favorites/Favorites";
 import Cart from "./Cart/Cart";
 import Login from "./Login/Login";
-import Footer from "./Footer";
+import Checkout from "./Checkout/Checkout";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 const AppContainer = styled.div`
   display: flex;
@@ -23,22 +23,47 @@ const AppContainer = styled.div`
   align-items: center;
 
   background-color: ${(props) => props.theme.background};
+
+  #notifier-modal {
+    position: fixed;
+
+    display: flex;
+    flex-direction: row;
+
+    bottom: 0;
+
+    width: 20vw;
+
+    justify-content: space-between;
+
+    padding: 20px;
+
+    font-weight: 300;
+
+    color: ${(props) => props.theme.invertedText};
+    background-color: ${(props) => props.theme.primary};
+  }
 `;
 
 function App() {
   const currentTheme = useSelector((state) => state.theme.currentTheme);
 
+  const isLogged = true;
+
   return (
     <BrowserRouter>
-      <Header />
       <AppContainer theme={currentTheme}>
+        <Header />
         <Routes>
           <Route exact path="/" element={<Main />} />
-          <Route exact path="/favorites" element={<Favorites />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/favorites" element={<Favorites />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/cart" element={<Login />} />
+          <Route
+            path="/checkout"
+            element={isLogged ? <Checkout /> : <Navigate to="/login" replace />}
+          />
         </Routes>
-        <Footer />
       </AppContainer>
     </BrowserRouter>
   );

@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 import { useSelector } from "react-redux";
 
-import githubIcon from "../assets/footer-icons/githubIcon.svg";
-import instagramIcon from "../assets/footer-icons/instagramIcon.svg";
-import linkedinIcon from "../assets/footer-icons/linkedinIcon.svg";
+import githubIcon from "../../assets/footer-icons/githubIcon.svg";
+import instagramIcon from "../../assets/footer-icons/instagramIcon.svg";
+import linkedinIcon from "../../assets/footer-icons/linkedinIcon.svg";
 
 const FooterContainer = styled.div`
   display: flex;

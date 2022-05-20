@@ -5,7 +5,7 @@ const light = {
   secondary: "#FFFFFF",
   tertiary: "#C2C7D2",
   background: "#F5F7FB",
-  text: "#000000",
+  text: "#393D45",
   invertedText: "#FFFFFF",
   shadow: "rgba(0,0,0,0.25)",
 };

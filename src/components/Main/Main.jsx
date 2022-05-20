@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Banner from "./Banner";
 import Category from "./Category";
 import Products from "./Products";
+import Footer from "./Footer";
 
 const MainContainer = styled.div`
   display: flex;
@@ -22,6 +23,7 @@ function Main() {
       <Banner />
       <Category />
       <Products />
+      <Footer />
     </MainContainer>
   );
 }

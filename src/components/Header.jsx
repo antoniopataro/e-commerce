@@ -8,7 +8,7 @@ import cartIcon from "../assets/header-icons/cartIcon.svg";
 import returnIcon from "../assets/header-icons/returnIcon.svg";
 
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { motion } from "framer-motion";
 
@@ -29,7 +29,41 @@ const HeaderContainer = styled.div`
 
   background-color: ${(props) => props.theme.background};
 
-  #menu {
+  #status {
+    position: absolute;
+    top: 100px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 10vw;
+    height: calc(100vh - 100px);
+
+    color: ${(props) => props.theme.text};
+    background-color: transparent;
+
+    .status-indicator-bar {
+      width: 2px;
+      height: 100px;
+
+      margin: 20px 0;
+
+      background-color: ${(props) => props.theme.tertiary};
+    }
+
+    .status-indicator-bar-motion {
+      position: absolute;
+
+      width: 2px;
+
+      background-color: green;
+    }
+  }
+
+  #logo {
     display: flex;
 
     width: 10vw;
@@ -37,8 +71,6 @@ const HeaderContainer = styled.div`
 
     align-items: center;
     justify-content: center;
-
-    cursor: pointer;
 
     background-color: ${(props) => props.theme.primary};
   }
@@ -51,30 +83,6 @@ const HeaderContainer = styled.div`
     justify-content: center;
 
     gap: 50px;
-
-    #menu {
-      display: flex;
-      flex-direction: column;
-
-      align-items: center;
-      justify-content: center;
-
-      color: red;
-
-      #menu-wrapper {
-        position: relative;
-        display: flex;
-
-        width: 10vw;
-
-        align-items: center;
-        justify-content: center;
-      }
-
-      .menu-option {
-        position: absolute;
-      }
-    }
 
     a {
       text-decoration: none;
@@ -149,87 +157,9 @@ const HeaderContainer = styled.div`
 
 function Header() {
   const currentTheme = useSelector((state) => state.theme.currentTheme);
+  const userCart = useSelector((state) => state.cart.userCart);
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activePage, setActivePage] = useState("/");
-
-  const handleMenuToggle = () => {
-    isMenuOpen ? setIsMenuOpen(false) : setIsMenuOpen(true);
-  };
-
-  const menuToggle = useEffect(() => {
-    return;
-  }, [isMenuOpen]);
-
-  const Menu = ({ isOpen }) => {
-    const menu = isOpen ? (
-      <motion.menu
-        id="menu-wrapper"
-        initial={{ y: -50 }}
-        animate={{ y: 0 }}
-        transition={{ ease: "easeOut" }}
-      >
-        <Link
-          to="/cart"
-          onClick={() => setActivePage("/cart")}
-          className="menu-option"
-          style={{ top: "75px" }}
-        >
-          Cart
-        </Link>
-        <Link
-          to="/favorites"
-          onClick={() => setActivePage("/favorites")}
-          className="menu-option"
-          style={{ top: "150px" }}
-        >
-          Favorites
-        </Link>
-        <Link
-          to="/login"
-          onClick={() => setActivePage("/login")}
-          className="menu-option"
-          style={{ top: "225px" }}
-        >
-          Login
-        </Link>
-      </motion.menu>
-    ) : (
-      <motion.div
-        id="menu-wrapper"
-        initial={{ y: 0, opacity: 1 }}
-        animate={{ y: -50, opacity: 0 }}
-        transition={{ ease: "easeOut" }}
-      >
-        <Link
-          to="/cart"
-          onClick={() => setActivePage("/cart")}
-          className="menu-option"
-          style={{ top: "75px" }}
-        >
-          Cart
-        </Link>
-        <Link
-          to="/favorites"
-          onClick={() => setActivePage("/favorites")}
-          className="menu-option"
-          style={{ top: "150px" }}
-        >
-          Favorites
-        </Link>
-        <Link
-          to="/login"
-          onClick={() => setActivePage("/login")}
-          className="menu-option"
-          style={{ top: "225px" }}
-        >
-          Login
-        </Link>
-      </motion.div>
-    );
-
-    return <div>{menu}</div>;
-  };
 
   const HeaderLabel = ({ path }) => {
     const label =
@@ -247,11 +177,37 @@ function Header() {
 
   return (
     <HeaderContainer theme={currentTheme}>
-      <div id="header-left">
-        <div id="menu" onClick={() => handleMenuToggle()}>
-          <img src={menuIcon} alt="collapsed-menu" width={30} />
-          <Menu isOpen={isMenuOpen} />
+      <div id="status">
+        01
+        <div className="status-indicator-bar">
+          <motion.div
+            style={{ backgroudColor: "green" }}
+            initial={{ height: 0 }}
+            animate={{ height: userCart[0] === undefined ? 0 : 100 }}
+            className="status-indicator-bar-motion"
+          ></motion.div>
         </div>
+        02
+        <div className="status-indicator-bar">
+          <motion.div
+            initial={{ height: 0 }}
+            animate={{
+              height:
+                window.location.pathname === "/cart" &&
+                userCart[0] !== undefined
+                  ? 100
+                  : 0,
+            }}
+            className="status-indicator-bar-motion"
+          ></motion.div>
+        </div>
+        03
+      </div>
+
+      <div id="header-left">
+        <Link to="/" onClick={() => setActivePage("/")} id="logo">
+          <img src={menuIcon} alt="Logo" width={30} />
+        </Link>
         <Link to="/" onClick={() => setActivePage("/")}>
           <HeaderLabel path={activePage} />
         </Link>

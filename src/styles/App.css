@@ -38,26 +38,6 @@ button{
 
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 0;
-}
-
-#notifier-modal {
-  position: fixed;
-
-  display: flex;
-  flex-direction: row;
-
-  bottom: 0;
-
-  width: 20vw;
-
-  justify-content: space-between;
-
-  padding: 20px;
-
-  font-weight: 300;
-
-  color: white;
-  background-color:black;
 }
