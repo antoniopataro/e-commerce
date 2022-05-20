@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-import bannerImage from "../../assets/bannerImage.png";
+import bannerImage from "../assets/bannerImage.png";
 
 export const productsList = [
   {

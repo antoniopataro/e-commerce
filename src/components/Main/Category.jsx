@@ -5,9 +5,17 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 import { useDispatch, useSelector } from "react-redux";
+import { changeCategory } from "../../redux/categorySlice";
 
 import filterIcon from "../../assets/category-picker-icons/filterIcon.svg";
-import { changeCategory } from "../../redux/categorySlice";
+import poloshirtIcon from "../../assets/category-picker-icons/poloshirtIcon.png";
+import girlstshirtIcon from "../../assets/category-picker-icons/girlstshirtIcon.png";
+import acessoriesIcon from "../../assets/category-picker-icons/acessoriesIcon.png";
+import socksIcon from "../../assets/category-picker-icons/socksIcon.png";
+import bagsIcon from "../../assets/category-picker-icons/bagsIcon.png";
+import shoesIcon from "../../assets/category-picker-icons/shoesIcon.png";
+import hatsIcon from "../../assets/category-picker-icons/hatsIcon.png";
+import topsIcon from "../../assets/category-picker-icons/topsIcon.png";
 
 const CategoryContainer = styled.div`
   display: flex;
@@ -49,7 +57,18 @@ const CategoryContainer = styled.div`
       color: ${(props) => props.theme.tertiary};
       background-color: transparent;
 
-      h4 {
+      .category-image {
+        display: flex;
+        height: 100%;
+
+        align-items: center;
+        justify-content: center;
+
+        pointer-events: none;
+      }
+
+      h4,
+      img {
         pointer-events: none;
       }
     }
@@ -101,15 +120,17 @@ function Category() {
   const updateIndicator = (e) => {
     const start = document.getElementById("first-category");
     setIndicatorWidth(start.offsetWidth);
+
     if (e) {
+      setIndicatorX(start.offsetLeft - start.offsetWidth);
       setIndicatorX(e.target.offsetLeft - start.offsetLeft);
       return;
     }
-    setIndicatorX(start.offsetLeft - start.offsetWidth);
   };
 
   const updateIndicatorOnLoad = useEffect(() => {
     updateIndicator();
+    window.addEventListener("resize", () => updateIndicator());
   }, []);
 
   return (
@@ -121,27 +142,51 @@ function Category() {
           className="category-option"
           onClick={(e) => handleCategory(e)}
         >
+          <div className="category-image">
+            <img src={poloshirtIcon} alt="Girls Tshirt" width={35} />
+          </div>
           <h4>Polo Shirt</h4>
         </div>
         <div className="category-option" onClick={(e) => handleCategory(e)}>
+          <div className="category-image">
+            <img src={girlstshirtIcon} alt="Girls Tshirt" width={35} />
+          </div>
           <h4>Girls Tshirt</h4>
         </div>
         <div className="category-option" onClick={(e) => handleCategory(e)}>
+          <div className="category-image">
+            <img src={acessoriesIcon} alt="Girls Tshirt" width={35} />
+          </div>
           <h4>Acessories</h4>
         </div>
         <div className="category-option" onClick={(e) => handleCategory(e)}>
+          <div className="category-image">
+            <img src={socksIcon} alt="Girls Tshirt" width={35} />
+          </div>
           <h4>Socks</h4>
         </div>
         <div className="category-option" onClick={(e) => handleCategory(e)}>
+          <div className="category-image">
+            <img src={bagsIcon} alt="Girls Tshirt" width={35} />
+          </div>
           <h4>Bags</h4>
         </div>
         <div className="category-option" onClick={(e) => handleCategory(e)}>
+          <div className="category-image">
+            <img src={shoesIcon} alt="Girls Tshirt" width={35} />
+          </div>
           <h4>Shoes</h4>
         </div>
         <div className="category-option" onClick={(e) => handleCategory(e)}>
+          <div className="category-image">
+            <img src={hatsIcon} alt="Girls Tshirt" width={35} />
+          </div>
           <h4>Hats</h4>
         </div>
         <div className="category-option" onClick={(e) => handleCategory(e)}>
+          <div className="category-image">
+            <img src={topsIcon} alt="Girls Tshirt" width={35} />
+          </div>
           <h4>Tops</h4>
         </div>
         <div id="category-option-filter">

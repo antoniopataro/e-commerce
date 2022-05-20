@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
-import menuIcon from "../../assets/header-icons/menuIcon.svg";
-import searchIcon from "../../assets/header-icons/searchIcon.svg";
-import heartIcon from "../../assets/header-icons/heartIcon.svg";
-import cartIcon from "../../assets/header-icons/cartIcon.svg";
-import returnIcon from "../../assets/header-icons/returnIcon.svg";
+import menuIcon from "../assets/header-icons/menuIcon.svg";
+import searchIcon from "../assets/header-icons/searchIcon.svg";
+import heartIcon from "../assets/header-icons/heartIcon.svg";
+import cartIcon from "../assets/header-icons/cartIcon.svg";
+import returnIcon from "../assets/header-icons/returnIcon.svg";
 
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -50,7 +50,7 @@ const HeaderContainer = styled.div`
     align-items: center;
     justify-content: center;
 
-    gap: 20px;
+    gap: 50px;
 
     #menu {
       display: flex;
@@ -169,13 +169,28 @@ function Header() {
         animate={{ y: 0 }}
         transition={{ ease: "easeOut" }}
       >
-        <Link to="/cart" className="menu-option" style={{ top: "75px" }}>
+        <Link
+          to="/cart"
+          onClick={() => setActivePage("/cart")}
+          className="menu-option"
+          style={{ top: "75px" }}
+        >
           Cart
         </Link>
-        <Link to="/favorites" className="menu-option" style={{ top: "150px" }}>
+        <Link
+          to="/favorites"
+          onClick={() => setActivePage("/favorites")}
+          className="menu-option"
+          style={{ top: "150px" }}
+        >
           Favorites
         </Link>
-        <Link to="/login" className="menu-option" style={{ top: "225px" }}>
+        <Link
+          to="/login"
+          onClick={() => setActivePage("/login")}
+          className="menu-option"
+          style={{ top: "225px" }}
+        >
           Login
         </Link>
       </motion.menu>
@@ -186,13 +201,28 @@ function Header() {
         animate={{ y: -50, opacity: 0 }}
         transition={{ ease: "easeOut" }}
       >
-        <Link to="/cart" className="menu-option" style={{ top: "75px" }}>
+        <Link
+          to="/cart"
+          onClick={() => setActivePage("/cart")}
+          className="menu-option"
+          style={{ top: "75px" }}
+        >
           Cart
         </Link>
-        <Link to="/favorites" className="menu-option" style={{ top: "150px" }}>
+        <Link
+          to="/favorites"
+          onClick={() => setActivePage("/favorites")}
+          className="menu-option"
+          style={{ top: "150px" }}
+        >
           Favorites
         </Link>
-        <Link to="/login" className="menu-option" style={{ top: "225px" }}>
+        <Link
+          to="/login"
+          onClick={() => setActivePage("/login")}
+          className="menu-option"
+          style={{ top: "225px" }}
+        >
           Login
         </Link>
       </motion.div>
@@ -203,7 +233,7 @@ function Header() {
 
   const HeaderLabel = ({ path }) => {
     const label =
-      path === "/cart" ? (
+      path !== "/" ? (
         <div id="e-commerce-label">
           <img src={returnIcon} />
           <div>Back</div>
@@ -246,7 +276,14 @@ function Header() {
         >
           <img src={cartIcon} alt="Cart" width={20} />
         </Link>
-        <button id="login-button">Login</button>
+        <Link
+          id="login-link"
+          to="/login"
+          onClick={() => setActivePage("/login")}
+          style={{ textDecoration: "none" }}
+        >
+          <button id="login-button">Login</button>
+        </Link>
       </div>
     </HeaderContainer>
   );

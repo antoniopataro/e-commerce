@@ -6,14 +6,14 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import { useDispatch, useSelector } from "react-redux";
-import { removeProduct } from "../redux/cartSlice";
+import { removeProduct } from "../../redux/cartSlice";
 
-import trashIcon from "../assets/trashIcon.svg";
-import applepayIcon from "../assets/payment-options-icons/applepayIcon.svg";
-import creditcardIcon from "../assets/payment-options-icons/creditcardIcon.svg";
-import paypalIcon from "../assets/payment-options-icons/paypalIcon.svg";
+import trashIcon from "../../assets/trashIcon.svg";
+import applepayIcon from "../../assets/payment-options-icons/applepayIcon.svg";
+import creditcardIcon from "../../assets/payment-options-icons/creditcardIcon.svg";
+import paypalIcon from "../../assets/payment-options-icons/paypalIcon.svg";
 
-import bannerImage from "../assets/bannerImage.png";
+import bannerImage from "../../assets/bannerImage.png";
 
 const CartContainer = styled.div`
   display: flex;

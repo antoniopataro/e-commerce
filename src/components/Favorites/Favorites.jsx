@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
-
 import styled from "styled-components";
 
 import { useSelector, useDispatch } from "react-redux";
-import { removeFavorite } from "../redux/favoritesSlice";
+import { removeFavorite } from "../../redux/favoritesSlice";
 
 import { motion } from "framer-motion";
 
-import trashIcon from "../assets/trashIcon.svg";
+import trashIcon from "../../assets/trashIcon.svg";
 
 const FavoritesContainer = styled.div`
   display: flex;

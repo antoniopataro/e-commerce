@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
-import Banner from "./Banner/Banner";
-import Category from "./Shopping/Category";
-import Products from "./Shopping/Products";
-import Footer from "./Footer/Footer";
+import Banner from "./Banner";
+import Category from "./Category";
+import Products from "./Products";
 
 const MainContainer = styled.div`
   display: flex;
@@ -23,7 +22,6 @@ function Main() {
       <Banner />
       <Category />
       <Products />
-      <Footer />
     </MainContainer>
   );
 }

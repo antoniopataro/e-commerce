@@ -9,7 +9,7 @@ import {
   increaseFavoriteQuantity,
 } from "../../redux/favoritesSlice";
 
-import { productsList } from "./ProductsList";
+import { productsList } from "../ProductsList";
 
 import { motion } from "framer-motion";
 import AOS from "aos";
