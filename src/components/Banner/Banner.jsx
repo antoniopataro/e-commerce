@@ -57,8 +57,11 @@ function Banner() {
   return (
     <BannerContainer theme={currentTheme}>
       <div id="banner-left">
-        <h1 id="banner-title">Vende-se</h1>
-        <h4 id="banner-subtitle">compra ai rapasiada ta baratim slc</h4>
+        <h1 id="banner-title">Winter 21'</h1>
+        <h4 id="banner-subtitle">
+          Winter layer season is here. Check out our trendy new winter
+          collection to stay warm in style.
+        </h4>
       </div>
       <div id="banner-right">
         <img src={bannerImage} alt="Banner Image" width={400} />

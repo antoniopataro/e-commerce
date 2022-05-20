@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
+import { addProduct, increaseQuantity } from "../../redux/cartSlice";
 import {
-  addProduct,
-  removeProduct,
-  increaseQuantity,
-} from "../../redux/cartSlice";
+  addFavorite,
+  increaseFavoriteQuantity,
+} from "../../redux/favoritesSlice";
 
 import { productsList } from "./ProductsList";
 
@@ -47,9 +47,18 @@ const ProductsContainer = styled.div`
     background-color: ${(props) => props.theme.secondary};
 
     .product-favorite-icon {
-      text-align: right;
+      display: flex;
 
       width: 100%;
+      justify-content: flex-end;
+
+      border: none;
+      outline: none;
+
+      background-color: transparent;
+      img {
+        cursor: pointer;
+      }
     }
 
     .product-image {
@@ -103,6 +112,7 @@ function Products() {
   const dispatch = useDispatch();
 
   const userCart = useSelector((state) => state.cart.userCart);
+  const userFavorites = useSelector((state) => state.favorites.userFavorites);
   const currentTheme = useSelector((state) => state.theme.currentTheme);
   const currentCategory = useSelector(
     (state) => state.category.currentCategory
@@ -118,10 +128,11 @@ function Products() {
   });
 
   const handleAddToCart = (product) => {
-    const productsIds = userCart.map(({ id }) => id);
+    const productsIds = userCart.map(({ id }) => id); // cant do it with raw product because its quantity is being changed
 
     if (productsIds.includes(product.id)) {
       dispatch(increaseQuantity(product));
+      return;
     }
 
     dispatch(addProduct(product));
@@ -136,6 +147,17 @@ function Products() {
     setWasProductAdded(true);
   };
 
+  const handleFavorite = (product) => {
+    const favoritesIds = userFavorites.map(({ id }) => id);
+
+    if (favoritesIds.includes(product.id)) {
+      dispatch(increaseFavoriteQuantity(product));
+      return;
+    }
+
+    dispatch(addFavorite(product));
+  };
+
   return (
     <>
       <ProductsContainer theme={currentTheme} data-aos="fade-up">
@@ -147,9 +169,12 @@ function Products() {
             whileHover={{ scale: 1.05 }}
           >
             <div className="product">
-              <div className="product-favorite-icon">
+              <button
+                className="product-favorite-icon"
+                onClick={() => handleFavorite(product)}
+              >
                 <img src={heartIcon} alt="Favorite Product" width={15} />
-              </div>
+              </button>
               <img
                 src={product.image}
                 alt="Product Image"

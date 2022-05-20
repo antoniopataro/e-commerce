@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import Header from "./Header/Header";
 import Main from "./Main";
 import Cart from "./Cart";
+import Favorites from "./Favorites";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -31,6 +32,7 @@ function App() {
       <AppContainer theme={currentTheme}>
         <Routes>
           <Route exact path="/" element={<Main />} />
+          <Route exact path="/favorites" element={<Favorites />} />
           <Route path="/cart" element={<Cart />} />
         </Routes>
       </AppContainer>

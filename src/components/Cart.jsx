@@ -248,26 +248,9 @@ function Cart() {
     setCartPrice(0);
 
     userCart.map((product) => {
-      setCartPrice((current) => current + product.price);
+      setCartPrice((current) => current + product.price * product.quantity);
     });
   }, [userCart]);
-
-  const filteredUserCart = () => {
-    const productsQuantities = userCart.map(({ quantity }) => quantity);
-
-    const maxValue = Math.max.apply(Math, productsQuantities);
-
-    const filteredUserCart = userCart.filter((product) => {
-      console.log("productquantity: ", product.quantity);
-      console.log("maxValue: ", maxValue);
-      if (product.quantity >= maxValue) {
-        return product;
-      }
-      return;
-    });
-
-    return filteredUserCart;
-  };
 
   const handleRemoveProduct = (product) => {
     dispatch(removeProduct(product));
@@ -276,7 +259,7 @@ function Cart() {
   return (
     <CartContainer theme={currentTheme} data-aos="fade-in">
       <div id="cart-left">
-        {filteredUserCart().map((product, index) => (
+        {userCart.map((product, index) => (
           <div className="product-card" key={index}>
             <div className="product-card-left">
               <img

@@ -206,7 +206,7 @@ function Header() {
       path === "/cart" ? (
         <div id="e-commerce-label">
           <img src={returnIcon} />
-          <div>Voltar</div>
+          <div>Back</div>
         </div>
       ) : (
         <div id="e-commerce-label">E-Commerce</div>
@@ -231,18 +231,21 @@ function Header() {
         <button className="nav-bar-icon">
           <img src={searchIcon} alt="Search" width={20} />
         </button>
-        <button className="nav-bar-icon">
+        <Link
+          to="/favorites"
+          onClick={() => setActivePage("/favorites")}
+          className="nav-bar-icon"
+        >
           <img src={heartIcon} alt="Favorites" width={20} />
-        </button>
-        <button className="nav-bar-icon">
-          <Link
-            id="cart-link"
-            to="/cart"
-            onClick={() => setActivePage("/cart")}
-          >
-            <img src={cartIcon} alt="Cart" width={20} />
-          </Link>
-        </button>
+        </Link>
+        <Link
+          id="cart-link"
+          className="nav-bar-icon"
+          to="/cart"
+          onClick={() => setActivePage("/cart")}
+        >
+          <img src={cartIcon} alt="Cart" width={20} />
+        </Link>
         <button id="login-button">Login</button>
       </div>
     </HeaderContainer>
