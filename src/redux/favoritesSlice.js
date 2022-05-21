@@ -18,21 +18,10 @@ export const slice = createSlice({
         }),
       };
     },
-    increaseFavoriteQuantity: (state, { payload }) => {
-      const newPayload = [...state.userFavorites].map((product) => {
-        if (product.id === payload.id) {
-          return { ...product, quantity: product.quantity + 1 };
-        }
-        return product;
-      });
-
-      return { ...state, userFavorites: newPayload };
-    },
   },
 });
 
-export const { addFavorite, removeFavorite, increaseFavoriteQuantity } =
-  slice.actions;
+export const { addFavorite, removeFavorite } = slice.actions;
 
 export const selectContent = (state) => state.userFavorites;
 

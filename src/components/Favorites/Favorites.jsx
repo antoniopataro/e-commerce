@@ -1,13 +1,17 @@
+import { useState } from "react";
+
 import styled from "styled-components";
 
 import { useSelector, useDispatch } from "react-redux";
+import { addProduct, increaseQuantity } from "../../redux/cartSlice";
 import { removeFavorite } from "../../redux/favoritesSlice";
 
 import { motion } from "framer-motion";
 
+import closeIcon from "../../assets/closeIcon.svg";
 import trashIcon from "../../assets/trashIcon.svg";
 
-const FavoritesContainer = styled.div`
+const FavoritesContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
 
@@ -18,6 +22,8 @@ const FavoritesContainer = styled.div`
 
   padding: 100px 0;
   gap: 100px;
+
+  color: ${(props) => props.theme.text};
 
   #products-container {
     display: grid;
@@ -46,8 +52,7 @@ const FavoritesContainer = styled.div`
 
         width: 100%;
 
-        align-items: center;
-        justify-content: space-between;
+        justify-content: flex-end;
 
         .favorite-quantity {
           color: ${(props) => props.theme.tertiary};
@@ -56,7 +61,6 @@ const FavoritesContainer = styled.div`
         .product-favorite-remove {
           display: flex;
 
-          width: 100%;
           justify-content: flex-end;
 
           border: none;
@@ -64,6 +68,7 @@ const FavoritesContainer = styled.div`
 
           background-color: transparent;
           img {
+            filter: ${(props) => props.theme.filter};
             cursor: pointer;
           }
         }
@@ -127,15 +132,47 @@ const FavoritesContainer = styled.div`
 function Favorites() {
   const dispatch = useDispatch();
 
+  const userCart = useSelector((state) => state.cart.userCart);
   const userFavorites = useSelector((state) => state.favorites.userFavorites);
   const currentTheme = useSelector((state) => state.theme.currentTheme);
+
+  const [wasProductAdded, setWasProductAdded] = useState(false);
 
   const handleRemoveFavorite = (product) => {
     dispatch(removeFavorite(product));
   };
 
+  const handleAddToCart = (product) => {
+    notifyAddition();
+
+    const productsIds = userCart.map(({ id }) => id); // cant do it with raw product because its quantity is being changed
+
+    if (productsIds.includes(product.id)) {
+      dispatch(increaseQuantity(product));
+      return;
+    }
+
+    dispatch(addProduct(product));
+  };
+
+  const notifyAddition = () => {
+    setTimeout(() => {
+      setWasProductAdded(false);
+    }, 2500);
+
+    setWasProductAdded(true);
+  };
+
+  const handleBuyAllFavorites = () => {
+    console.log("Buy: ", userFavorites);
+  };
+
   return (
-    <FavoritesContainer theme={currentTheme}>
+    <FavoritesContainer
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      theme={currentTheme}
+    >
       <div id="products-container">
         {userFavorites.map((product, index) => (
           <motion.div
@@ -146,7 +183,6 @@ function Favorites() {
           >
             <div className="product">
               <div className="product-top">
-                <div className="favorite-quantity">{product.quantity}</div>
                 <button
                   className="product-favorite-remove"
                   onClick={() => handleRemoveFavorite(product)}
@@ -173,7 +209,21 @@ function Favorites() {
           </motion.div>
         ))}
       </div>
-      <button id="buy-all-favorites">Buy all</button>
+      <button id="buy-all-favorites" onClick={() => handleBuyAllFavorites()}>
+        Buy all
+      </button>
+      <motion.div
+        animate={{ y: wasProductAdded ? -50 : 100 }}
+        id="notifier-modal"
+      >
+        <div>Product Added</div>
+        <img
+          src={closeIcon}
+          alt="Close Modal"
+          width={20}
+          onClick={() => setWasProductAdded(false)} // a little quick fix - not proud of the naming, but it closes the modal
+        />
+      </motion.div>
     </FavoritesContainer>
   );
 }
