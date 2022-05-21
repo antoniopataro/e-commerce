@@ -4,10 +4,7 @@ import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct, increaseQuantity } from "../../redux/cartSlice";
-import {
-  addFavorite,
-  increaseFavoriteQuantity,
-} from "../../redux/favoritesSlice";
+import { addFavorite } from "../../redux/favoritesSlice";
 
 import { productsList } from "../ProductsList";
 
@@ -44,6 +41,7 @@ const ProductsContainer = styled.div`
     padding: 20px;
     gap: 10px;
 
+    color: ${(props) => props.theme.text};
     background-color: ${(props) => props.theme.secondary};
 
     .product-favorite-icon {
@@ -97,6 +95,11 @@ const ProductsContainer = styled.div`
     background-color: ${(props) => props.theme.primary};
 
     div {
+      pointer-events: none;
+    }
+
+    img {
+      filter: ${(props) => props.theme.filter};
       pointer-events: none;
     }
   }
@@ -154,7 +157,6 @@ function Products() {
     const favoritesIds = userFavorites.map(({ id }) => id);
 
     if (favoritesIds.includes(product.id)) {
-      dispatch(increaseFavoriteQuantity(product));
       return;
     }
 

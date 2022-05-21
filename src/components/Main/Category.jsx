@@ -81,7 +81,7 @@ const CategoryContainer = styled.div`
       width: 100px;
       height: 100px;
 
-      background-color: ${(props) => props.theme.primary};
+      background-color: ${(props) => props.theme.indicator};
     }
 
     #category-option-filter {
@@ -102,6 +102,11 @@ const CategoryContainer = styled.div`
 
       background-color: ${(props) => props.theme.primary};
     }
+  }
+
+  img {
+    filter: ${(props) => props.theme.filter};
+    pointer-events: none;
   }
 `;
 

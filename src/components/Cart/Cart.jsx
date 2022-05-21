@@ -9,9 +9,6 @@ import styled from "styled-components";
 
 import { motion } from "framer-motion";
 
-import AOS from "aos";
-import "aos/dist/aos.css";
-
 import trashIcon from "../../assets/trashIcon.svg";
 import applepayIcon from "../../assets/payment-options-icons/applepayIcon.svg";
 import creditcardIcon from "../../assets/payment-options-icons/creditcardIcon.svg";
@@ -19,7 +16,7 @@ import paypalIcon from "../../assets/payment-options-icons/paypalIcon.svg";
 
 import bannerImage from "../../assets/bannerImage.png";
 
-const CartContainer = styled.div`
+const CartContainer = styled(motion.div)`
   display: flex;
   flex-direction: row;
 
@@ -56,6 +53,7 @@ const CartContainer = styled.div`
 
       padding: 25px;
 
+      color: ${(props) => props.theme.text};
       background-color: ${(props) => props.theme.secondary};
 
       .product-card-left {
@@ -103,6 +101,11 @@ const CartContainer = styled.div`
 
           :hover {
             background-color: ${(props) => props.theme.tertiary};
+          }
+
+          img {
+            filter: ${(props) => props.theme.filter};
+            pointer-events: none;
           }
         }
       }
@@ -230,18 +233,13 @@ const CartContainer = styled.div`
 
       cursor: pointer;
 
+      color: ${(props) => props.theme.text};
       background-color: ${(props) => props.theme.secondary};
     }
   }
 `;
 
 function Cart() {
-  useEffect(() => {
-    AOS.init({
-      duration: 250,
-    });
-  }, []);
-
   const dispatch = useDispatch();
 
   const userCart = useSelector((state) => state.cart.userCart);
@@ -264,11 +262,15 @@ function Cart() {
   };
 
   const handleCartSubmit = () => {
-    console.log("submit cart");
+    console.log("Buy: ", userCart);
   };
 
   return (
-    <CartContainer theme={currentTheme} data-aos="fade-in">
+    <CartContainer
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      theme={currentTheme}
+    >
       <div id="cart-left">
         {userCart.map((product, index) => (
           <motion.div

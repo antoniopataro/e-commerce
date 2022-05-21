@@ -1,11 +1,13 @@
 import styled from "styled-components";
 
+import { motion } from "framer-motion";
+
 import Banner from "./Banner";
 import Category from "./Category";
 import Products from "./Products";
 import Footer from "./Footer";
 
-const MainContainer = styled.div`
+const MainContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
 
@@ -19,7 +21,7 @@ const MainContainer = styled.div`
 
 function Main() {
   return (
-    <MainContainer>
+    <MainContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <Banner />
       <Category />
       <Products />

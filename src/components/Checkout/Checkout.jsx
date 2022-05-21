@@ -13,6 +13,7 @@ const CheckoutContainer = styled.div`
 
   padding: 100px 0;
 
+  color: ${(props) => props.theme.text};
   background-color: ${(props) => props.theme.background};
 `;
 

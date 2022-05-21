@@ -1,16 +1,19 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import menuIcon from "../assets/header-icons/menuIcon.svg";
+import logoIcon from "../assets/header-icons/logoIcon.svg";
 import searchIcon from "../assets/header-icons/searchIcon.svg";
 import heartIcon from "../assets/header-icons/heartIcon.svg";
 import cartIcon from "../assets/header-icons/cartIcon.svg";
 import returnIcon from "../assets/header-icons/returnIcon.svg";
+import themeIcon from "../assets/themeIcon.svg";
 
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
 import { motion } from "framer-motion";
+import { changeTheme } from "../redux/themeSlice";
+import { useEffect } from "react";
 
 const HeaderContainer = styled.div`
   position: fixed;
@@ -151,15 +154,19 @@ const HeaderContainer = styled.div`
   }
 
   img {
+    filter: ${(props) => props.theme.filter};
     pointer-events: none;
   }
 `;
 
 function Header() {
+  const dispatch = useDispatch();
+
   const currentTheme = useSelector((state) => state.theme.currentTheme);
   const userCart = useSelector((state) => state.cart.userCart);
 
   const [activePage, setActivePage] = useState("/");
+  const [activeTheme, setActiveTheme] = useState("light");
 
   const HeaderLabel = ({ path }) => {
     const label =
@@ -174,6 +181,14 @@ function Header() {
 
     return <div>{label}</div>;
   };
+
+  const handleThemeChange = () => {
+    setActiveTheme(activeTheme === "light" ? "dark" : "light");
+  };
+
+  const updateTheme = useEffect(() => {
+    dispatch(changeTheme(activeTheme));
+  }, [activeTheme]);
 
   return (
     <HeaderContainer theme={currentTheme}>
@@ -206,7 +221,7 @@ function Header() {
 
       <div id="header-left">
         <Link to="/" onClick={() => setActivePage("/")} id="logo">
-          <img src={menuIcon} alt="Logo" width={30} />
+          <img src={logoIcon} alt="Logo" width={75} />
         </Link>
         <Link to="/" onClick={() => setActivePage("/")}>
           <HeaderLabel path={activePage} />
@@ -240,6 +255,13 @@ function Header() {
         >
           <button id="login-button">Login</button>
         </Link>
+        <button
+          id="cart-link"
+          className="nav-bar-icon"
+          onClick={() => handleThemeChange()}
+        >
+          <img src={themeIcon} alt="Cart" width={20} />
+        </button>
       </div>
     </HeaderContainer>
   );
