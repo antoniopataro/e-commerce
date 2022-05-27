@@ -202,6 +202,7 @@ function Products() {
       <motion.div
         animate={{ y: wasProductAdded ? -50 : 100 }}
         id="notifier-modal"
+        style={{ zIndex: 100 }}
       >
         <div>Product Added</div>
         <img
