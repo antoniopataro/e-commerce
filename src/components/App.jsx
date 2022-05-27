@@ -51,7 +51,7 @@ function App() {
   const isLogged = true;
 
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
       <AppContainer theme={currentTheme}>
         <Header />
         <Routes>
