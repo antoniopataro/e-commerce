@@ -165,12 +165,12 @@ function Header() {
   const currentTheme = useSelector((state) => state.theme.currentTheme);
   const userCart = useSelector((state) => state.cart.userCart);
 
-  const [activePage, setActivePage] = useState("/");
+  const [activePage, setActivePage] = useState("/e-commerce/");
   const [activeTheme, setActiveTheme] = useState("light");
 
   const HeaderLabel = ({ path }) => {
     const label =
-      path !== "/" ? (
+      path !== "/e-commerce/" ? (
         <div id="e-commerce-label">
           <img src={returnIcon} />
           <div>Back</div>
@@ -220,10 +220,14 @@ function Header() {
       </div>
 
       <div id="header-left">
-        <Link to="/" onClick={() => setActivePage("/")} id="logo">
+        <Link
+          to="/e-commerce/"
+          onClick={() => setActivePage("/e-commerce/")}
+          id="logo"
+        >
           <img src={logoIcon} alt="Logo" width={75} />
         </Link>
-        <Link to="/" onClick={() => setActivePage("/")}>
+        <Link to="/e-commerce/" onClick={() => setActivePage("/e-commerce/")}>
           <HeaderLabel path={activePage} />
         </Link>
       </div>
@@ -233,7 +237,7 @@ function Header() {
           <img src={searchIcon} alt="Search" width={20} />
         </button>
         <Link
-          to="/favorites"
+          to="/e-commerce/favorites"
           onClick={() => setActivePage("/favorites")}
           className="nav-bar-icon"
         >
@@ -242,15 +246,15 @@ function Header() {
         <Link
           id="cart-link"
           className="nav-bar-icon"
-          to="/cart"
+          to="/e-commerce/cart"
           onClick={() => setActivePage("/cart")}
         >
           <img src={cartIcon} alt="Cart" width={20} />
         </Link>
         <Link
           id="login-link"
-          to="/login"
-          onClick={() => setActivePage("/login")}
+          to="/e-commerce/login"
+          onClick={() => setActivePage("/e-commerce/login")}
           style={{ textDecoration: "none" }}
         >
           <button id="login-button">Login</button>

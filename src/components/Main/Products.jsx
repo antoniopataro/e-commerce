@@ -60,8 +60,7 @@ const ProductsContainer = styled.div`
     }
 
     .product-image {
-      width: 100%;
-      height: 100%;
+      width: 200px;
     }
 
     .product-name {

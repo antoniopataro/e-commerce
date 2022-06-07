@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { useSelector } from "react-redux";
 
-import bannerImage from "../../assets/bannerImage.png";
+import favicon from "../../../src/favicon.png";
 
 const BannerContainer = styled.div`
   display: flex;
@@ -44,7 +44,7 @@ const BannerContainer = styled.div`
     width: 50%;
     height: 100%;
 
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
 
     padding: 50px;
@@ -57,14 +57,18 @@ function Banner() {
   return (
     <BannerContainer theme={currentTheme}>
       <div id="banner-left">
-        <h1 id="banner-title">Winter 21'</h1>
+        <h1 id="banner-title">Let's Shop!</h1>
         <h4 id="banner-subtitle">
-          Winter layer season is here. Check out our trendy new winter
-          collection to stay warm in style.
+          Come on, man! You got buy those items. Just look at them!
+          <br />
+          <br />
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+          rutrum, mauris in vehicula consequat, ligula ex feugiat elit, nec
+          auctor urna mi ac velit.
         </h4>
       </div>
       <div id="banner-right">
-        <img src={bannerImage} alt="Banner Image" width={400} />
+        <img src={favicon} alt="Banner Image" width={300} />
       </div>
     </BannerContainer>
   );

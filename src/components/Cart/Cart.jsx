@@ -14,8 +14,6 @@ import applepayIcon from "../../assets/payment-options-icons/applepayIcon.svg";
 import creditcardIcon from "../../assets/payment-options-icons/creditcardIcon.svg";
 import paypalIcon from "../../assets/payment-options-icons/paypalIcon.svg";
 
-import bannerImage from "../../assets/bannerImage.png";
-
 const CartContainer = styled(motion.div)`
   display: flex;
   flex-direction: row;
@@ -281,7 +279,7 @@ function Cart() {
           >
             <div className="product-card-left">
               <img
-                src={bannerImage}
+                src={product.image}
                 alt="Product Image"
                 width={50}
                 height={50}

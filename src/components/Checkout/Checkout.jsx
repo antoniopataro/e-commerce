@@ -22,7 +22,7 @@ function Checkout() {
 
   return (
     <CheckoutContainer theme={currentTheme}>
-      <div>(external payment API)</div>
+      <div>(payment)</div>
     </CheckoutContainer>
   );
 }

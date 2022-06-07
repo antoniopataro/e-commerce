@@ -55,13 +55,19 @@ function App() {
       <AppContainer theme={currentTheme}>
         <Header />
         <Routes>
-          <Route exact path="/" element={<Main />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route exact path="/e-commerce/" element={<Main />} />
+          <Route path="/e-commerce/login" element={<Login />} />
+          <Route path="/e-commerce/favorites" element={<Favorites />} />
+          <Route path="/e-commerce/cart" element={<Cart />} />
           <Route
-            path="/checkout"
-            element={isLogged ? <Checkout /> : <Navigate to="/login" replace />}
+            path="/e-commerce/checkout"
+            element={
+              isLogged ? (
+                <Checkout />
+              ) : (
+                <Navigate to="/e-commerce/login" replace />
+              )
+            }
           />
         </Routes>
       </AppContainer>
