@@ -109,6 +109,11 @@ const HeaderContainer = styled.div`
 
     gap: 20px;
 
+    a {
+      text-decoration: none;
+      color: ${(props) => props.theme.primary};
+    }
+
     .nav-bar-icon,
     #cart-link {
       display: flex;
@@ -162,8 +167,12 @@ const HeaderContainer = styled.div`
 function Header() {
   const dispatch = useDispatch();
 
+  const userAuth = useSelector((state) => state.auth.userAuth);
   const currentTheme = useSelector((state) => state.theme.currentTheme);
   const userCart = useSelector((state) => state.cart.userCart);
+
+  const isLogged = userAuth.isLogged;
+  const userInfo = userAuth.userInfo;
 
   const [activePage, setActivePage] = useState("/e-commerce/");
   const [activeTheme, setActiveTheme] = useState("light");
@@ -190,9 +199,15 @@ function Header() {
     dispatch(changeTheme(activeTheme));
   }, [activeTheme]);
 
+  const statusStyles = {};
+
+  if (activePage === "login") {
+    statusStyles.display = "none";
+  }
+
   return (
     <HeaderContainer theme={currentTheme}>
-      <div id="status">
+      <div id="status" style={statusStyles}>
         01
         <div className="status-indicator-bar">
           <motion.div
@@ -251,14 +266,21 @@ function Header() {
         >
           <img src={cartIcon} alt="Cart" width={20} />
         </Link>
-        <Link
-          id="login-link"
-          to="/e-commerce/login"
-          onClick={() => setActivePage("/e-commerce/login")}
-          style={{ textDecoration: "none" }}
-        >
-          <button id="login-button">Login</button>
-        </Link>
+        {!isLogged && (
+          <Link
+            id="login-link"
+            to="/e-commerce/login"
+            onClick={() => setActivePage("/e-commerce/login")}
+            style={{ textDecoration: "none" }}
+          >
+            <button id="login-button">Login</button>
+          </Link>
+        )}
+        {isLogged && (
+          <Link to="/e-commerce/profile">
+            <div>{userInfo.name.split(" ")[0]}</div>
+          </Link>
+        )}
         <button
           id="cart-link"
           className="nav-bar-icon"

@@ -260,7 +260,7 @@ function Cart() {
   };
 
   const handleCartSubmit = () => {
-    console.log("Buy: ", userCart);
+    return userCart;
   };
 
   return (
@@ -325,9 +325,10 @@ function Cart() {
                 animate={{
                   backgroundColor:
                     paymentOption === "Credit Card"
-                      ? currentTheme.backgroundColor
+                      ? currentTheme.shadow
                       : currentTheme.primary,
                 }}
+                transition={{ duration: 0.015 }}
                 className="payment-method-option"
                 onClick={() => setPaymentOption("Credit Card")}
               >
@@ -342,9 +343,10 @@ function Cart() {
                 animate={{
                   backgroundColor:
                     paymentOption === "Paypal"
-                      ? currentTheme.background
+                      ? currentTheme.shadow
                       : currentTheme.primary,
                 }}
+                transition={{ duration: 0.015 }}
                 className="payment-method-option"
                 onClick={() => setPaymentOption("Paypal")}
               >
@@ -355,9 +357,10 @@ function Cart() {
                 animate={{
                   backgroundColor:
                     paymentOption === "Apple Pay"
-                      ? currentTheme.background
+                      ? currentTheme.shadow
                       : currentTheme.primary,
                 }}
+                transition={{ duration: 0.015 }}
                 className="payment-method-option"
                 onClick={() => setPaymentOption("Apple Pay")}
               >
@@ -368,7 +371,7 @@ function Cart() {
         </div>
         <Link
           style={{ textDecoration: "none", width: "100%" }}
-          to={!shipTo || cartPrice === 0 ? "" : "/checkout"}
+          to={!shipTo || cartPrice === 0 ? "" : "/e-commerce/checkout"}
         >
           <motion.button
             animate={{

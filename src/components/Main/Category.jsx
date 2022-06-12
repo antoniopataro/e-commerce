@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import styled from "styled-components";
 
@@ -122,20 +122,27 @@ function Category() {
     dispatch(changeCategory(e.target.textContent));
   };
 
+  const cathegoryRef = useRef(null);
+
   const updateIndicator = (e) => {
-    const start = document.getElementById("first-category");
-    setIndicatorWidth(start.offsetWidth);
+    if (window.location.pathname !== "/e-commerce/") {
+      return;
+    }
+
+    const cathegoryRect = cathegoryRef.current.getBoundingClientRect();
+
+    setIndicatorWidth(cathegoryRect.width);
 
     if (e) {
-      setIndicatorX(start.offsetLeft - start.offsetWidth);
-      setIndicatorX(e.target.offsetLeft - start.offsetLeft);
+      setIndicatorX(cathegoryRect.x - cathegoryRect.width);
+      setIndicatorX(e.target.offsetLeft - cathegoryRect.x);
       return;
     }
   };
 
   const updateIndicatorOnLoad = useEffect(() => {
     updateIndicator();
-    window.addEventListener("resize", () => updateIndicator());
+    window.addEventListener("resize", updateIndicator);
   }, []);
 
   return (
@@ -143,7 +150,7 @@ function Category() {
       <h2 id="category-picker-title">Category</h2>
       <div id="category-selector">
         <div
-          id="first-category"
+          ref={cathegoryRef}
           className="category-option"
           onClick={(e) => handleCategory(e)}
         >

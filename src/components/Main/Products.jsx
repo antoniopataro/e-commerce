@@ -17,7 +17,7 @@ import closeIcon from "../../assets/closeIcon.svg";
 
 const ProductsContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
 
   width: 80vw;
   height: fit-content;
@@ -60,7 +60,7 @@ const ProductsContainer = styled.div`
     }
 
     .product-image {
-      width: 200px;
+      width: 100px;
     }
 
     .product-name {
