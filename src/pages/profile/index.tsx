@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../redux/authSlice';
 import ProfileStyles from './styles';
@@ -14,9 +15,11 @@ function Profile() {
     dispatch(logout(''));
   }
 
-  if (!userAuth.isLogged) {
-    router.push('/');
-  }
+  useEffect(() => {
+    if (!userAuth.isLogged) {
+      router.push('/');
+    }
+  }, [userAuth, router]);
 
   return (
     <ProfileStyles>

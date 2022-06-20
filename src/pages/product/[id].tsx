@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,8 +8,19 @@ import { addProduct, increaseQuantity } from '../../redux/cartSlice';
 
 import ProductStyles from './styles';
 
+interface Product {
+  name: string;
+  price: number;
+  category: string;
+  image: StaticImageData;
+  id: string;
+  quantity: number;
+  slug: string;
+}
+
 function Product() {
   const dispatch = useDispatch();
+  /*@ts-ignore*/
   const userCart = useSelector((state) => state.cart.userCart);
 
   const router = useRouter();
@@ -17,6 +28,7 @@ function Product() {
 
   const productSlugs = productsList.map((item) => item.slug);
 
+  /*@ts-ignore*/
   if (!productSlugs.includes(queryParam)) {
     return;
   }
@@ -24,7 +36,8 @@ function Product() {
   const productIndex = productsList.findIndex((item) => item.slug === queryParam);
   const product = productsList[productIndex];
 
-  function addToCart() {
+  function addToCart(product: Product) {
+    /*@ts-ignore*/
     const productsIds = userCart.map(({ id }) => id);
 
     if (productsIds.includes(product.id)) {
