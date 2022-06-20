@@ -1,15 +1,17 @@
-# Another E-Commerce App
+# An E-Commerce made with NextJS
 
-Not much to say.
+This is my first NextJS project, a refactor of an old e-commerce I've made using React.
+
+Used Typescript and @ts-ignore 🤣 on this project.
 
 ## 📚 Installed libs:
 
 - Redux;
 - Styled Components;
-- Framer-Motion;
+- UUID;
 
 ## 🔥 Information
 
 The app is under construction! ⚠️
 
-Being made by: [Antônio Pataro](https://www.linkedin.com/in/antoniopataro/) and [Thalles Freitas](https://www.linkedin.com/in/thalles-freitas-376804203/).
+See more of my work [here](https://www.antoniopataro.dev).

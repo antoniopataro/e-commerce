@@ -1,13 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const slice = createSlice({
-  name: "currentCategory",
-  initialState: { currentCategory: "Polo Shirt" },
+  name: 'currentCategory',
+  initialState: { currentCategory: 'Polo Shirt' },
   reducers: {
     changeCategory: (state, { payload }) => {
       return { ...state, currentCategory: payload };
-    },
-  },
+    }
+  }
 });
 
 export const { changeCategory } = slice.actions;

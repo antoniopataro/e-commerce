@@ -1,18 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 function userAuthInitialState() {
-  const storagedAuth = JSON.parse(localStorage.getItem("userAuth"));
+  if (typeof window === 'undefined') {
+    return {
+      isLogged: false,
+      userInfo: {}
+    };
+  }
+
+  const storagedAuth = JSON.parse(localStorage.getItem('userAuth'));
   if (storagedAuth) {
     return storagedAuth;
   }
   return {
     isLogged: false,
-    userInfo: {},
+    userInfo: {}
   };
 }
 
 function usersDatabaseInitialState() {
-  const storagedUsers = JSON.parse(localStorage.getItem("usersDatabase"));
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  const storagedUsers = JSON.parse(localStorage.getItem('usersDatabase'));
 
   if (storagedUsers) {
     return storagedUsers;
@@ -21,14 +32,14 @@ function usersDatabaseInitialState() {
 }
 
 export const slice = createSlice({
-  name: "userAuth",
+  name: 'userAuth',
   initialState: {
     userAuth: userAuthInitialState(),
-    usersDatabase: usersDatabaseInitialState(),
+    usersDatabase: usersDatabaseInitialState()
   },
   reducers: {
     login: (state, { payload }) => {
-      const storagedUsers = JSON.parse(localStorage.getItem("usersDatabase"));
+      const storagedUsers = JSON.parse(localStorage.getItem('usersDatabase'));
 
       if (!storagedUsers) {
         return;
@@ -42,10 +53,10 @@ export const slice = createSlice({
       if (storagedUsers[index].email === payload.email) {
         if (storagedUsers[index].password === payload.password) {
           localStorage.setItem(
-            "userAuth",
+            'userAuth',
             JSON.stringify({
               isLogged: true,
-              userInfo: storagedUsers[index],
+              userInfo: storagedUsers[index]
             })
           );
 
@@ -53,18 +64,18 @@ export const slice = createSlice({
             ...state,
             userAuth: {
               isLogged: true,
-              userInfo: storagedUsers[index],
-            },
+              userInfo: storagedUsers[index]
+            }
           };
         }
       }
     },
     logout: (state, { payload }) => {
       localStorage.setItem(
-        "userAuth",
+        'userAuth',
         JSON.stringify({
           isLogged: false,
-          userInfo: {},
+          userInfo: {}
         })
       );
 
@@ -72,25 +83,22 @@ export const slice = createSlice({
         ...state,
         userAuth: {
           isLogged: false,
-          userInfo: {},
-        },
+          userInfo: {}
+        }
       };
     },
     singup: (state, { payload }) => {
-      const storagedUsers = JSON.parse(localStorage.getItem("usersDatabase"));
+      const storagedUsers = JSON.parse(localStorage.getItem('usersDatabase'));
       const storagedUsersEmails = storagedUsers?.map((user) => user.email);
 
       if (storagedUsersEmails?.includes(payload.email)) {
         return;
       }
 
-      localStorage.setItem(
-        "usersDatabase",
-        JSON.stringify([...state.usersDatabase, payload])
-      );
+      localStorage.setItem('usersDatabase', JSON.stringify([...state.usersDatabase, payload]));
       return { ...state, usersDatabase: [...state.usersDatabase, payload] };
-    },
-  },
+    }
+  }
 });
 
 export const { login, logout, singup } = slice.actions;

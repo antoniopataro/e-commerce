@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const slice = createSlice({
-  name: "userCart",
+  name: 'userCart',
   initialState: { userCart: [] },
   reducers: {
     addProduct: (state, { payload }) => {
@@ -15,7 +15,7 @@ export const slice = createSlice({
             return;
           }
           return product;
-        }),
+        })
       };
     },
     increaseQuantity: (state, { payload }) => {
@@ -27,8 +27,8 @@ export const slice = createSlice({
       });
 
       return { ...state, userCart: newPayload };
-    },
-  },
+    }
+  }
 });
 
 export const { addProduct, removeProduct, increaseQuantity } = slice.actions;
