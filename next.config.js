@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   basePath: '/e-commerce',
-  assetPrefix: '/e-commerce',
+  assetPrefix: '/e-commerce/',
   images: {
     loader: 'akamai',
     path: ''
