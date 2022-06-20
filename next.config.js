@@ -2,6 +2,10 @@
 const nextConfig = {
   basePath: '/e-commerce',
   assetPrefix: '/e-commerce',
+  images: {
+    loader: 'akamai',
+    path: ''
+  },
   reactStrictMode: true
 };
 
