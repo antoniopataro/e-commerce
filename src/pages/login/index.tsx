@@ -48,7 +48,7 @@ function Login() {
           </div>
           <div id="form-bottom">
             <button type="submit">Login</button>
-            <Link href="singup">Create an account.</Link>
+            <Link href="/singup">Create an account.</Link>
           </div>
         </form>
       </div>
