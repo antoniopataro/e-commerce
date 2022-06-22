@@ -20,8 +20,6 @@ function Singup() {
       password: password.current?.value
     };
 
-    console.log(user);
-
     dispatch(singup(user));
   };
 
