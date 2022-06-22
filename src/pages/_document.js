@@ -6,7 +6,7 @@ export default function Document() {
       <Head />
       <title>E-Commerce</title>
       <meta name="description" content="A NextJS + Typescript E-Commerce Project." />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="shortcut icon" href="/favicon.png/" />
       <body>
         <Main />
         <NextScript />
