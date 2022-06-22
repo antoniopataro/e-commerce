@@ -1,15 +1,14 @@
 import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
-
 import heartIcon from '../../../public/assets/header-icons/heartIcon.svg';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { addFavorite } from '../../redux/favoritesSlice';
 import { addProduct, increaseQuantity } from '../../redux/cartSlice';
 
 import { productsList } from './productsList';
 
 import ProductsStyles from './styles';
-import { addFavorite } from '../../redux/favoritesSlice';
 
 interface Product {
   name: string;
@@ -29,37 +28,38 @@ function Products() {
   /*@ts-ignore*/
   const userFavorites = useSelector((state) => state.favorites.userFavorites);
   /*@ts-ignore*/
-  const category = useSelector((state) => state.category.currentCategory);
+  const currentCategory = useSelector((state) => state.category.currentCategory);
 
   const filteredProducts = productsList.filter((product: Product) => {
-    if (product.category === category) {
+    if (product.category === currentCategory) {
       return product;
     }
     return;
   });
 
   function addToCart(product: Product) {
-    /*@ts-ignore*/
-    const productsIds = userCart.map(({ id }) => id);
-
-    if (productsIds.includes(product.id)) {
+    if (isProductInCart(product)) {
       dispatch(increaseQuantity(product));
       return;
     }
-
     dispatch(addProduct(product));
   }
 
   function addToFavorites(product: Product) {
-    /*@ts-ignore*/
-    const productsIds = userFavorites.map(({ id }) => id);
-
-    if (productsIds.includes(product.id)) {
+    if (isProductInCart(product)) {
       return;
     }
-
     dispatch(addFavorite(product));
   }
+
+  const isProductInCart = (product: Product) => {
+    const productIds = userCart.map((item: Product) => item.id);
+
+    if (productIds.includes(product.id)) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <ProductsStyles>
