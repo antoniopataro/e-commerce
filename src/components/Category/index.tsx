@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import Image from 'next/image';
-
-import { useDispatch } from 'react-redux';
-import { changeCategory } from '../../redux/categorySlice';
-
 import poloshirtIcon from '../../../public/assets/category-icons/poloshirtIcon.png';
 import girlstshirtIcon from '../../../public/assets/category-icons/girlstshirtIcon.png';
 import acessoriesIcon from '../../../public/assets/category-icons/acessoriesIcon.png';
@@ -13,9 +10,12 @@ import shoesIcon from '../../../public/assets/category-icons/shoesIcon.png';
 import hatsIcon from '../../../public/assets/category-icons/hatsIcon.png';
 import topsIcon from '../../../public/assets/category-icons/topsIcon.png';
 
+import { useDispatch } from 'react-redux';
+import { changeCategory } from '../../redux/categorySlice';
+
 import CategoryStyles from './styles';
 
-interface CategoryRect {
+interface IndicatorRectData {
   x: number;
   width: number;
 }
@@ -24,7 +24,7 @@ function Category() {
   const dispatch = useDispatch();
 
   const [category, setCategory] = useState<HTMLElement>();
-  const [indicatorRect, setIndicatorRect] = useState<CategoryRect>();
+  const [indicatorRect, setIndicatorRect] = useState<IndicatorRectData>();
 
   function handleCategory(e: React.MouseEvent<HTMLElement>, category: string) {
     setCategory(e.target as HTMLElement);
@@ -38,12 +38,9 @@ function Category() {
       x: categoryRectRef.current?.getBoundingClientRect().x,
       width: categoryRectRef.current?.getBoundingClientRect().width
     };
-
     const clickedRect = {
-      x: category?.getBoundingClientRect().x,
-      width: category?.getBoundingClientRect().width
+      x: category?.getBoundingClientRect().x
     };
-
     const updatedRect = {
       x: Number(clickedRect.x) - Number(refRect.x),
       width: Number(refRect.width)
