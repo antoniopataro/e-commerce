@@ -39,3 +39,24 @@ h4 {
 button {
   font-family: 'Poppins', sans-serif;
 }
+
+.Toastify__toast {
+  display: flex;
+
+  height: 20px !important;
+
+  text-align: center;
+
+  border-radius: 4px !important;
+
+  color: white !important;
+  background: #393d45 !important;
+}
+
+.Toastify__toast > button > svg {
+  display: none;
+}
+
+.toastProgress {
+  background: white !important;
+}
