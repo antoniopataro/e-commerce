@@ -6,10 +6,13 @@ import Image, { StaticImageData } from 'next/image';
 import trashIcon from '../../../public/assets/trashIcon.svg';
 
 import { useSelector } from 'react-redux';
-import CartStyles from './styles';
 import { useDispatch } from 'react-redux';
 import { removeProduct } from '../../redux/cartSlice';
 import { useRouter } from 'next/router';
+
+import { toast } from 'react-toastify';
+
+import CartStyles from './styles';
 
 interface Product {
   name: string;
@@ -39,6 +42,7 @@ function Cart() {
   }, [userCart]);
 
   function removeFromCart(product: Product) {
+    toast('Removed Product');
     dispatch(removeProduct(product));
   }
 
