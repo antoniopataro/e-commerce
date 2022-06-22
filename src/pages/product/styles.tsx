@@ -74,6 +74,23 @@ const ProductStyles = styled.main`
       }
     }
   }
+
+  #not-found {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 60vh;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 20px;
+
+    a {
+      color: inherit;
+    }
+  }
 `;
 
 export default ProductStyles;

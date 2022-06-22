@@ -1,8 +1,12 @@
-import Image, { StaticImageData } from 'next/image';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
 
+import Link from 'next/link';
+
+import Image, { StaticImageData } from 'next/image';
+
+import { useDispatch, useSelector } from 'react-redux';
 import { productsList } from '../../components/Products/productsList';
 import { addProduct, increaseQuantity } from '../../redux/cartSlice';
 
@@ -20,33 +24,47 @@ interface Product {
 
 function Product() {
   const dispatch = useDispatch();
+
+  const router = useRouter();
+  const queryId = router.query.id! as string;
+
   /*@ts-ignore*/
   const userCart = useSelector((state) => state.cart.userCart);
 
-  const router = useRouter();
-  const queryParam = router.query.id;
+  const productIndex = productsList.findIndex((item) => item.slug === queryId);
+  const product = productsList[productIndex];
 
   const productSlugs = productsList.map((item) => item.slug);
 
-  /*@ts-ignore*/
-  if (!productSlugs.includes(queryParam)) {
-    return;
+  if (!productSlugs.includes(queryId)) {
+    return (
+      <ProductStyles>
+        <div id="not-found">
+          <h3>
+            <strong>404</strong> | This page does not exist.
+          </h3>
+          <Link href="/">Homepage</Link>
+        </div>
+      </ProductStyles>
+    );
   }
 
-  const productIndex = productsList.findIndex((item) => item.slug === queryParam);
-  const product = productsList[productIndex];
-
   function addToCart(product: Product) {
-    /*@ts-ignore*/
-    const productsIds = userCart.map(({ id }) => id);
-
-    if (productsIds.includes(product.id)) {
+    if (isProductInCart(product)) {
       dispatch(increaseQuantity(product));
       return;
     }
-
     dispatch(addProduct(product));
   }
+
+  const isProductInCart = (product: Product) => {
+    const productIds = userCart.map((item: Product) => item.id);
+
+    if (productIds.includes(product.id)) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <ProductStyles>
