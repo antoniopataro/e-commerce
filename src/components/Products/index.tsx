@@ -8,6 +8,8 @@ import { addProduct, increaseQuantity } from '../../redux/cartSlice';
 
 import { productsList } from './productsList';
 
+import { toast } from 'react-toastify';
+
 import ProductsStyles from './styles';
 
 interface Product {
@@ -24,8 +26,6 @@ function Products() {
   const dispatch = useDispatch();
 
   /*@ts-ignore*/
-  const userCart = useSelector((state) => state.cart.userCart);
-  /*@ts-ignore*/
   const userFavorites = useSelector((state) => state.favorites.userFavorites);
   /*@ts-ignore*/
   const currentCategory = useSelector((state) => state.category.currentCategory);
@@ -38,6 +38,8 @@ function Products() {
   });
 
   function addToCart(product: Product) {
+    toast('Added Product');
+
     if (isProductInCart(product)) {
       dispatch(increaseQuantity(product));
       return;
@@ -49,11 +51,12 @@ function Products() {
     if (isProductInCart(product)) {
       return;
     }
+    toast('Favorited Product');
     dispatch(addFavorite(product));
   }
 
   const isProductInCart = (product: Product) => {
-    const productIds = userCart.map((item: Product) => item.id);
+    const productIds = userFavorites.map((item: Product) => item.id);
 
     if (productIds.includes(product.id)) {
       return true;
@@ -71,8 +74,10 @@ function Products() {
           <Link href={`/product/${product.slug}`}>
             <div className="product">
               <Image src={product.image} alt={product.name} width={100} height={100} title={product.name} />
-              <h4>{product.name}</h4>
-              <h5>{`$ ${product.price.toFixed(2)}`}</h5>
+              <div className="product-info">
+                <h4>{product.name}</h4>
+                <h5>{`$ ${product.price.toFixed(2)}`}</h5>
+              </div>
             </div>
           </Link>
           <button className="add-to-cart" onClick={() => addToCart(product)}>

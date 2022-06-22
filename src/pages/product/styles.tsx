@@ -53,13 +53,14 @@ const ProductStyles = styled.main`
 
         align-items: center;
 
-        button {
+        #add-to-cart {
           display: grid;
           place-items: center;
 
           width: 150px;
 
           padding: 8px 0;
+          margin-bottom: 10px;
 
           border: none;
           outline: none;
@@ -70,6 +71,14 @@ const ProductStyles = styled.main`
 
           color: white;
           background-color: #393d45;
+        }
+
+        #add-to-favorites {
+          border: none;
+          outline: none;
+
+          cursor: pointer;
+          background-color: transparent;
         }
       }
     }

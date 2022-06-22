@@ -37,6 +37,10 @@ const ProductsStyles = styled.section`
       cursor: pointer;
 
       background-color: transparent;
+
+      img {
+        pointer-events: none;
+      }
     }
 
     .product {
@@ -49,11 +53,17 @@ const ProductsStyles = styled.section`
       align-items: center;
       justify-content: center;
 
+      gap: 4px;
+
       cursor: pointer;
       background-color: white;
 
       border-top-left-radius: 4px;
       border-top-right-radius: 4px;
+
+      .product-info {
+        text-align: center;
+      }
     }
 
     .add-to-cart {

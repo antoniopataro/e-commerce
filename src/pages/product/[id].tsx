@@ -1,14 +1,16 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-
 import { useRouter } from 'next/router';
 
 import Link from 'next/link';
 
 import Image, { StaticImageData } from 'next/image';
 
-import { useDispatch, useSelector } from 'react-redux';
 import { productsList } from '../../components/Products/productsList';
+
+import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, increaseQuantity } from '../../redux/cartSlice';
+import { addFavorite } from '../../redux/favoritesSlice';
+
+import { toast } from 'react-toastify';
 
 import ProductStyles from './styles';
 
@@ -29,7 +31,7 @@ function Product() {
   const queryId = router.query.id! as string;
 
   /*@ts-ignore*/
-  const userCart = useSelector((state) => state.cart.userCart);
+  const userFavorites = useSelector((state) => state.favorites.userFavorites);
 
   const productIndex = productsList.findIndex((item) => item.slug === queryId);
   const product = productsList[productIndex];
@@ -50,6 +52,8 @@ function Product() {
   }
 
   function addToCart(product: Product) {
+    toast('Added Product');
+
     if (isProductInCart(product)) {
       dispatch(increaseQuantity(product));
       return;
@@ -57,8 +61,16 @@ function Product() {
     dispatch(addProduct(product));
   }
 
+  function addToFavorites(product: Product) {
+    if (isProductInCart(product)) {
+      return;
+    }
+    toast('Favorited Product');
+    dispatch(addFavorite(product));
+  }
+
   const isProductInCart = (product: Product) => {
-    const productIds = userCart.map((item: Product) => item.id);
+    const productIds = userFavorites.map((item: Product) => item.id);
 
     if (productIds.includes(product.id)) {
       return true;
@@ -81,7 +93,12 @@ function Product() {
           </p>
           <div id="checkout-info">
             <h2>{`$ ${product.price.toFixed(2)}`}</h2>
-            <button onClick={() => addToCart(product)}>Add to Cart</button>
+            <button id="add-to-cart" onClick={() => addToCart(product)}>
+              Add to Cart
+            </button>
+            <button id="add-to-favorites" onClick={() => addToFavorites(product)}>
+              Add to Favorites
+            </button>
           </div>
         </div>
       </div>
