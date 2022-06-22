@@ -40,43 +40,6 @@ const HeaderStyles = styled.main`
     }
   }
 
-  #searchbar {
-    display: flex;
-    flex-direction: row;
-
-    align-items: center;
-
-    gap: 20px;
-    padding: 0 16px;
-
-    border: 2px solid #393d45;
-
-    border-radius: 4px;
-
-    background-color: white;
-
-    button {
-      display: grid;
-      place-items: center;
-
-      border: none;
-      outline: none;
-
-      cursor: pointer;
-
-      background-color: transparent;
-    }
-
-    input {
-      padding: 8px 0;
-
-      border: none;
-      outline: none;
-
-      font-family: 'Poppins', sans-serif;
-    }
-  }
-
   a {
     color: inherit;
   }
