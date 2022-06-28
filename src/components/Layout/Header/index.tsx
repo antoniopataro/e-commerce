@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
-import Image from 'next/image';
 import Link from 'next/link';
-
-import Searchbar from '../../Searchbar';
-
-import HeaderStyles from './styles';
+import Image from 'next/image';
 
 import logoIcon from '../../../../public/assets/header-icons/logoIcon.svg';
 import heartIcon from '../../../../public/assets/header-icons/heartIcon.svg';
 import cartIcon from '../../../../public/assets/header-icons/cartIcon.svg';
+
 import { useSelector } from 'react-redux';
+
+import Searchbar from '../../Searchbar';
+
+import HeaderStyles from './styles';
 
 interface UserData {
   isLogged: boolean;

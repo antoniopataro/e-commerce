@@ -1,25 +1,17 @@
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 
 import trashIcon from '../../../public/assets/trashIcon.svg';
 
 import Link from 'next/link';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, increaseQuantity } from '../../redux/cartSlice';
+import { removeFavorite } from '../../redux/favoritesSlice';
+import { toast } from '../../redux/toastSlice';
 
-import { toast } from 'react-toastify';
+import { ProductInterface } from '../../components/Products/productsList';
 
 import FavoritesStyles from './styles';
-import { removeFavorite } from '../../redux/favoritesSlice';
-
-interface Product {
-  name: string;
-  price: number;
-  category: string;
-  image: StaticImageData;
-  id: string;
-  quantity: number;
-  slug: string;
-}
 
 function Favorites() {
   const dispatch = useDispatch();
@@ -29,8 +21,8 @@ function Favorites() {
   /*@ts-ignore*/
   const favorites = useSelector((state) => state.favorites.userFavorites);
 
-  function addToCart(product: Product) {
-    toast('Added Product');
+  function addToCart(product: ProductInterface) {
+    dispatch(toast('Added Product'));
 
     /*@ts-ignore*/
     const productsIds = userCart.map(({ id }) => id);
@@ -43,15 +35,15 @@ function Favorites() {
     dispatch(addProduct(product));
   }
 
-  function removeFromFavorites(product: Product) {
-    toast('Removed Product');
+  function removeFromFavorites(product: ProductInterface) {
+    dispatch(toast('Favorited Product'));
 
     dispatch(removeFavorite(product));
   }
 
   return (
     <FavoritesStyles>
-      {favorites.map((product: Product, index: number) => (
+      {favorites.map((product: ProductInterface, index: number) => (
         <div className="product-wrapper" key={index}>
           <button className="remove-from-favorites" onClick={() => removeFromFavorites(product)}>
             <Image src={trashIcon} alt="Remove from Favorites" width={20} />

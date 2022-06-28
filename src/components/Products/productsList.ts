@@ -1,3 +1,5 @@
+import { StaticImageData } from 'next/image';
+
 import { v4 as uuidv4 } from 'uuid';
 
 import bag1 from '../../../public/assets/product-images/bag1.png';
@@ -25,7 +27,17 @@ import sweater from '../../../public/assets/product-images/sweater.png';
 import tie from '../../../public/assets/product-images/tie.png';
 import underwear from '../../../public/assets/product-images/underwear.png';
 
-export const productsList = [
+export interface ProductInterface {
+  name: string;
+  price: number;
+  category: string;
+  image: StaticImageData;
+  id: string;
+  quantity: number;
+  slug: string;
+}
+
+export const productsList: Array<Product> = [
   {
     name: 'Hand Bag',
     price: 14.9,

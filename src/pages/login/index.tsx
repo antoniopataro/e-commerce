@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../redux/authSlice';
 
 import LoginStyles from './styles';
-import { login } from '../../redux/authSlice';
-import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
 
 function Login() {
   const dispatch = useDispatch();

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+
 import favicon from '../../../public/assets/favicon.png';
 
 import BannerStyles from './styles';

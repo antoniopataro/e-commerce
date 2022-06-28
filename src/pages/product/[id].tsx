@@ -2,27 +2,16 @@ import { useRouter } from 'next/router';
 
 import Link from 'next/link';
 
-import Image, { StaticImageData } from 'next/image';
-
-import { productsList } from '../../components/Products/productsList';
+import Image from 'next/image';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, increaseQuantity } from '../../redux/cartSlice';
 import { addFavorite } from '../../redux/favoritesSlice';
+import { toast } from '../../redux/toastSlice';
 
-import { toast } from 'react-toastify';
+import { productsList, ProductInterface } from '../../components/Products/productsList';
 
 import ProductStyles from './styles';
-
-interface Product {
-  name: string;
-  price: number;
-  category: string;
-  image: StaticImageData;
-  id: string;
-  quantity: number;
-  slug: string;
-}
 
 function Product() {
   const dispatch = useDispatch();
@@ -51,8 +40,8 @@ function Product() {
     );
   }
 
-  function addToCart(product: Product) {
-    toast('Added Product');
+  function addToCart(product: ProductInterface) {
+    dispatch(toast('Added Product'));
 
     if (isProductInCart(product)) {
       dispatch(increaseQuantity(product));
@@ -61,16 +50,16 @@ function Product() {
     dispatch(addProduct(product));
   }
 
-  function addToFavorites(product: Product) {
+  function addToFavorites(product: ProductInterface) {
     if (isProductInCart(product)) {
       return;
     }
-    toast('Favorited Product');
+    dispatch(toast('Favorited Product'));
     dispatch(addFavorite(product));
   }
 
-  const isProductInCart = (product: Product) => {
-    const productIds = userFavorites.map((item: Product) => item.id);
+  const isProductInCart = (product: ProductInterface) => {
+    const productIds = userFavorites.map((item: ProductInterface) => item.id);
 
     if (productIds.includes(product.id)) {
       return true;

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
+
 import poloshirtIcon from '../../../public/assets/category-icons/poloshirtIcon.png';
 import girlstshirtIcon from '../../../public/assets/category-icons/girlstshirtIcon.png';
 import acessoriesIcon from '../../../public/assets/category-icons/acessoriesIcon.png';

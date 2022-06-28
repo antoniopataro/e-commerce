@@ -1,26 +1,16 @@
 import Link from 'next/link';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
+
 import heartIcon from '../../../public/assets/header-icons/heartIcon.svg';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { addFavorite } from '../../redux/favoritesSlice';
 import { addProduct, increaseQuantity } from '../../redux/cartSlice';
+import { toast } from '../../redux/toastSlice';
 
-import { productsList } from './productsList';
-
-import { toast } from 'react-toastify';
+import { productsList, ProductInterface } from './productsList';
 
 import ProductsStyles from './styles';
-
-interface Product {
-  name: string;
-  price: number;
-  category: string;
-  image: StaticImageData;
-  id: string;
-  quantity: number;
-  slug: string;
-}
 
 function Products() {
   const dispatch = useDispatch();
@@ -30,15 +20,15 @@ function Products() {
   /*@ts-ignore*/
   const currentCategory = useSelector((state) => state.category.currentCategory);
 
-  const filteredProducts = productsList.filter((product: Product) => {
+  const filteredProducts = productsList.filter((product: ProductInterface) => {
     if (product.category === currentCategory) {
       return product;
     }
     return;
   });
 
-  function addToCart(product: Product) {
-    toast('Added Product');
+  function addToCart(product: ProductInterface) {
+    dispatch(toast('Added Product'));
 
     if (isProductInCart(product)) {
       dispatch(increaseQuantity(product));
@@ -47,16 +37,16 @@ function Products() {
     dispatch(addProduct(product));
   }
 
-  function addToFavorites(product: Product) {
+  function addToFavorites(product: ProductInterface) {
     if (isProductInCart(product)) {
       return;
     }
-    toast('Favorited Product');
+    dispatch(toast('Favorited Product'));
     dispatch(addFavorite(product));
   }
 
-  const isProductInCart = (product: Product) => {
-    const productIds = userFavorites.map((item: Product) => item.id);
+  const isProductInCart = (product: ProductInterface) => {
+    const productIds = userFavorites.map((item: ProductInterface) => item.id);
 
     if (productIds.includes(product.id)) {
       return true;

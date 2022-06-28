@@ -1,28 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 
 import trashIcon from '../../../public/assets/trashIcon.svg';
 
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { removeProduct } from '../../redux/cartSlice';
 import { useRouter } from 'next/router';
 
-import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeProduct } from '../../redux/cartSlice';
+import { toast } from '../../redux/toastSlice';
+
+import { ProductInterface } from '../../components/Products/productsList';
 
 import CartStyles from './styles';
-
-interface Product {
-  name: string;
-  price: number;
-  category: string;
-  image: StaticImageData;
-  id: string;
-  quantity: number;
-  slug: string;
-}
 
 function Cart() {
   const dispatch = useDispatch();
@@ -36,13 +27,13 @@ function Cart() {
   useEffect(() => {
     setCartPrice(0);
 
-    userCart.map((product: Product) => {
+    userCart.map((product: ProductInterface) => {
       setCartPrice((current) => current + product.price * product.quantity);
     });
   }, [userCart]);
 
-  function removeFromCart(product: Product) {
-    toast('Removed Product');
+  function removeFromCart(product: ProductInterface) {
+    dispatch(toast('Removed Product'));
     dispatch(removeProduct(product));
   }
 
@@ -55,7 +46,7 @@ function Cart() {
   return (
     <CartStyles>
       <div id="cart">
-        {userCart.map((product: Product, index: number) => (
+        {userCart.map((product: ProductInterface, index: number) => (
           <div className="product" key={index}>
             <Link href={`/product/${product.slug}`}>
               <a>
@@ -79,7 +70,7 @@ function Cart() {
           <h3>Checkout</h3>
 
           <ul>
-            {userCart.map((product: Product, index: number) => (
+            {userCart.map((product: ProductInterface, index: number) => (
               <li key={index}>
                 {product.name} ({product.quantity}) - {`$ ${product.price.toFixed(2)}`}
               </li>
