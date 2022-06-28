@@ -11,7 +11,6 @@ Used Typescript and @ts-ignore 🤣 on this project.
 - Redux;
 - Styled Components;
 - UUID;
-- React-Toastify.
 
 ## 🔥 Information
 
