@@ -1,4 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
+
+import { useRouter } from 'next/router';
 
 import { useDispatch } from 'react-redux';
 import { singup } from '../../redux/authSlice';
@@ -8,20 +10,54 @@ import SingupStyles from './styles';
 function Singup() {
   const dispatch = useDispatch();
 
-  const name = useRef<HTMLInputElement>(null);
-  const email = useRef<HTMLInputElement>(null);
-  const password = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [nameError, setNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const user = {
-      name: name.current?.value,
-      email: email.current?.value,
-      password: password.current?.value
+      name,
+      email,
+      password
     };
 
-    dispatch(singup(user));
+    if (validateInput()) {
+      dispatch(singup(user));
+
+      router.push('/login');
+      return;
+    }
+    return;
+  };
+
+  const validateInput = () => {
+    if (name.length === 0) {
+      setNameError(true);
+      return false;
+    }
+    setNameError(false);
+
+    if (!email.includes('@') || !email.includes('.')) {
+      setEmailError(true);
+      return false;
+    }
+    setEmailError(false);
+
+    if (password.length === 0) {
+      setPasswordError(true);
+      return false;
+    }
+    setPasswordError(false);
+
+    return true;
   };
 
   return (
@@ -30,9 +66,27 @@ function Singup() {
         <form onSubmit={handleSubmit}>
           <h1>Singup</h1>
           <div id="form-top">
-            <input ref={name} type="name" placeholder="Your name." autoComplete="name" />
-            <input ref={email} type="email" placeholder="Your e-mail." autoComplete="email" />
-            <input ref={password} type="password" placeholder="Your password." autoComplete="off" />
+            <input
+              onChange={(e) => setName(e.target.value)}
+              type="name"
+              placeholder="Your name."
+              autoComplete="name"
+              style={nameError ? { outlineColor: 'red' } : { outlineColor: 'transparent' }}
+            />
+            <input
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              placeholder="Your e-mail."
+              autoComplete="email"
+              style={emailError ? { outlineColor: 'red' } : { outlineColor: 'transparent' }}
+            />
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              placeholder="Your password."
+              autoComplete="off"
+              style={passwordError ? { outlineColor: 'red' } : { outlineColor: 'transparent' }}
+            />
           </div>
           <div id="form-bottom">
             <button type="submit">Singup</button>

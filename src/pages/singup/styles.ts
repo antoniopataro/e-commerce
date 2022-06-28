@@ -36,8 +36,10 @@ const SingupStyles = styled.main`
         input {
           width: 100%;
 
-          border: 2px solid #393d45;
-          outline: none;
+          border: none;
+
+          outline: 2px solid transparent;
+          outline-color: transparent;
 
           padding: 8px 12px;
 
@@ -47,6 +49,9 @@ const SingupStyles = styled.main`
 
           color: #393d45;
           background-color: white;
+
+          transition: 0.15s ease;
+          transition-property: outline-color;
         }
       }
 
