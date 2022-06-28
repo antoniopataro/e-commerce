@@ -37,7 +37,7 @@ export interface ProductInterface {
   slug: string;
 }
 
-export const productsList: Array<Product> = [
+export const productsList: Array<ProductInterface> = [
   {
     name: 'Hand Bag',
     price: 14.9,
