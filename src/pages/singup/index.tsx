@@ -71,21 +71,21 @@ function Singup() {
               type="name"
               placeholder="Your name."
               autoComplete="name"
-              style={nameError ? { outlineColor: 'red' } : { outlineColor: 'transparent' }}
+              style={nameError ? { outlineColor: 'red' } : { outlineColor: '#393d45' }}
             />
             <input
               onChange={(e) => setEmail(e.target.value)}
               type="email"
               placeholder="Your e-mail."
               autoComplete="email"
-              style={emailError ? { outlineColor: 'red' } : { outlineColor: 'transparent' }}
+              style={emailError ? { outlineColor: 'red' } : { outlineColor: '#393d45' }}
             />
             <input
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               placeholder="Your password."
               autoComplete="off"
-              style={passwordError ? { outlineColor: 'red' } : { outlineColor: 'transparent' }}
+              style={passwordError ? { outlineColor: 'red' } : { outlineColor: '#393d45' }}
             />
           </div>
           <div id="form-bottom">

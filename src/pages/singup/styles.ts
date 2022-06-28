@@ -4,15 +4,21 @@ const SingupStyles = styled.main`
   display: flex;
   flex-direction: column;
 
+  width: 100%;
+  height: 60vh;
+
   gap: 20px;
 
   #singup-wrapper {
     display: flex;
     flex-direction: column;
 
+    width: 100%;
+
     align-items: center;
 
     gap: 20px;
+    padding: 20px 12.5vw;
 
     form {
       display: flex;
@@ -37,9 +43,7 @@ const SingupStyles = styled.main`
           width: 100%;
 
           border: none;
-
-          outline: 2px solid transparent;
-          outline-color: transparent;
+          outline: 2px solid;
 
           padding: 8px 12px;
 

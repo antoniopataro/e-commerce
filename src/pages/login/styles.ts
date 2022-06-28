@@ -4,21 +4,29 @@ const LoginStyles = styled.main`
   display: flex;
   flex-direction: column;
 
+  width: 100%;
+  height: 60vh;
+
+  align-items: center;
+
   gap: 20px;
 
   #login-wrapper {
     display: flex;
     flex-direction: column;
 
+    width: 100%;
+
     align-items: center;
 
     gap: 20px;
+    padding: 20px 12.5vw;
 
     form {
       display: flex;
       flex-direction: column;
 
-      width: 350px;
+      width: 300px;
 
       align-items: center;
 
